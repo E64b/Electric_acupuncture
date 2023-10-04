@@ -71,7 +71,7 @@ void loop (){
 		lcd.home ();
 		lcd.print ("CURRENT PIN");
 		lcd.print (' ');
-		lcd.print (CURRENT_PIN);
+		lcd.print (CURRENT_PIN + 1);
 		lcd.setCursor (0, 1);
 		lcd.print ("OF");
 		lcd.print (' ');
