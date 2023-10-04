@@ -1,8 +1,9 @@
-#include "GyverHC595.h"
 #include <Arduino.h>
 #include <SPI.h>
 #include <stdio.h>
-#include <LiquidCrystal_I2C.h>
+#include "LiquidCrystal_I2C.h"
+#include "GyverHC595.h"
+
 
 #define STCP 10 //pinCS 12
 #define DS 11 //pinDT 14
