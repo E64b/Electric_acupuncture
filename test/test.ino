@@ -18,7 +18,7 @@
 GyverHC595<SHIFTS, HC_PINS> reg (STCP, DS, SHCP);
 LiquidCrystal_I2C lcd (0x27, 16, 2);
 
-uint16_t CURRENT_PIN = 0;
+int16_t CURRENT_PIN = -1;
 uint32_t TIMER = 0;
 uint16_t OLD_PIN = 0;
 bool FIRST = true;
@@ -51,18 +51,21 @@ void loop (){
 	if ((millis () - TIMER >= 10000) or (FIRST)){
 		TIMER = millis ();
 		lcdRedraw = true;
+		OLD_PIN = CURRENT_PIN;
 		if (CURRENT_PIN <= ALL_DATA){
-			OLD_PIN = CURRENT_PIN;
-			reg.set (CURRENT_PIN);
 			CURRENT_PIN++;
+			reg.set (CURRENT_PIN);
+			Serial.println (CURRENT_PIN);
 			if (CURRENT_PIN >= ALL_DATA){
 				CURRENT_PIN = 0;
 				}
 			if (!FIRST){
+				Serial.println (OLD_PIN);
 				reg.clear (OLD_PIN);
 				}
 			}
 		reg.update ();
+		Serial.println ("UPDATE");
 		}
 
 	/*If the value has changed, we change it on the screen*/
