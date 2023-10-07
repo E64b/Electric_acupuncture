@@ -15,7 +15,7 @@
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
 
 
-GyverHC595<SHIFTS, HC_PINS> reg (STCP, DS, SHCP);
+GyverHC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
 LiquidCrystal_I2C lcd (0x27, 16, 2);
 
 uint16_t CURRENT_PIN = 0;
