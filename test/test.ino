@@ -62,7 +62,7 @@ void loop (){
 				reg.clear (OLD_PIN);
 				}
 			}
-      reg.update();
+		reg.update ();
 		}
 
 	/*If the value has changed, we change it on the screen*/
