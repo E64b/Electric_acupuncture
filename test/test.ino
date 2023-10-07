@@ -58,9 +58,9 @@ void loop (){
 			if (CURRENT_PIN >= ALL_DATA){
 				CURRENT_PIN = 0;
 				}
-			if(!FIRST){
-			reg.clear(OLD_PIN);	
-			}
+			if (!FIRST){
+				reg.clear (OLD_PIN);
+				}
 			}
 		}
 
@@ -79,5 +79,5 @@ void loop (){
 		lcd.print ("OF");
 		lcd.print (' ');
 		lcd.print (ALL_DATA);
-		}	
+		}
 	}
