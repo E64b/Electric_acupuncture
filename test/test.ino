@@ -47,7 +47,7 @@ void setup (){
 void loop (){
 
 	/*We turn on the pins in turn in increments of 1 minute*/
-	if (millis () - TIMER >= 60000){
+	if ((millis () - TIMER >= 60000) or (FIRST)){
 		/*If we have reached the limit, we return to the beginning*/
 		if (CURRENT_PIN == ALL_DATA){
 			CURRENT_PIN = 0;
@@ -70,12 +70,13 @@ void loop (){
 		lcd.clear ();
 		OLD_PIN = CURRENT_PIN;
 		lcd.home ();
-		lcd.print ("CURRENT PIN");
+		lcd.print ("PIN");
 		lcd.print (' ');
-		lcd.print (CURRENT_PIN + 1);
+		lcd.print ('Q');
+		lcd.print (CURRENT_PIN);
 		lcd.setCursor (0, 1);
 		lcd.print ("OF");
 		lcd.print (' ');
-		lcd.print (ALL_DATA + 1);
+		lcd.print (ALL_DATA);
 		}	
 	}
