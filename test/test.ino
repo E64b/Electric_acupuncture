@@ -22,6 +22,7 @@ uint16_t CURRENT_PIN = 0;
 uint32_t TIMER = 0;
 uint16_t OLD_PIN = 0;
 bool FIRST = true;
+bool lcdRedraw = false;
 
 void setup (){
 	/*Init Serial*/
@@ -47,25 +48,25 @@ void setup (){
 void loop (){
 
 	/*We turn on the pins in turn in increments of 1 minute*/
-	if ((millis () - TIMER >= 60000) or (FIRST)){
-		/*If we have reached the limit, we return to the beginning*/
-		if (CURRENT_PIN == ALL_DATA){
-			CURRENT_PIN = 0;
-			}
+	if ((millis () - TIMER >= 10000) or (FIRST)){
 		TIMER = millis ();
-		for (CURRENT_PIN; CURRENT_PIN < ALL_DATA; CURRENT_PIN++){
+		lcdRedraw = true;
+		if (CURRENT_PIN <= ALL_DATA){
 			OLD_PIN = CURRENT_PIN;
 			reg.set (CURRENT_PIN);
-			if (CURRENT_PIN > 0){
-				reg.clear (CURRENT_PIN - 1);
+			CURRENT_PIN++;
+			if (CURRENT_PIN >= ALL_DATA){
+				CURRENT_PIN = 0;
 				}
-			reg.update ();
-			break;
+			if(!FIRST){
+			reg.clear(OLD_PIN);	
+			}
 			}
 		}
 
 	/*If the value has changed, we change it on the screen*/
-	if ((OLD_PIN != CURRENT_PIN) or (FIRST)){
+	if ((OLD_PIN != CURRENT_PIN and lcdRedraw) or (FIRST)){
+		lcdRedraw = false;
 		FIRST = false;
 		lcd.clear ();
 		OLD_PIN = CURRENT_PIN;
