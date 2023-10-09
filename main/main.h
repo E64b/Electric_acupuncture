@@ -17,12 +17,18 @@
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
 
 typedef struct{
-	bool IN_VAL[ALL_DATA]{};
-	bool send=false;
-	bool recived=false;
+	bool VAL[ALL_DATA]{};
 	uint16_t i=0;
+	float Voltage;
+	float Current;
+	bool StartMenu;
+	bool Work;
+	uint8_t Setting;
+	bool WorkMenu;
 	} Data;
 
+extern EncButton eb;
+extern INA219 ina;
 extern LiquidCrystal_I2C lcd;
 extern GyverHC595<SHIFTS, HC_PINS> reg;
 extern Data data;
