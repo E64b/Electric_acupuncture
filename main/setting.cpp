@@ -1,3 +1,5 @@
 #include "main.h"
 
-void setting(){}
+void setting(){
+if (data.Se)
+}
