@@ -1,3 +1,7 @@
 #include "main.h"
 
-void work(){}
+void work(){
+	if(data.Work){
+
+		}
+	}

@@ -1,4 +1,5 @@
 #pragma once
+#pragma pack(1, push)
 
 #include "lib/GyverHC595.h"
 #include "lib/GyverINA.h"
@@ -23,8 +24,10 @@ typedef struct{
 	float Current;
 	bool StartMenu;
 	bool Work;
-	uint8_t Setting;
+	uint8_t Display;
 	bool WorkMenu;
+	bool DisplayRedraw;
+	uint32_t timer = 0;
 	} Data;
 
 extern EncButton eb;
@@ -38,3 +41,5 @@ void setting();
 void sensor();
 void work();
 void enc();
+
+#pragma pack(pop)

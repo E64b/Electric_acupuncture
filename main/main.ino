@@ -13,6 +13,15 @@ void setup(){
 	while (!ina.begin());
 	Serial.println("INA OK");
 
+	lcd.begin();
+	lcd.backlight();
+	lcd.setCursor(0, 0);
+	lcd.print("Electric");
+	lcd.setCursor(2, 1);
+	lcd.print("Acupuncture");
+	delay(3000);
+	lcd.clear();
+
 	reg.clearAll();
 	reg.update();
 	reg.writeAll(false);	
