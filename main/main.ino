@@ -2,35 +2,38 @@
 
 INA219 ina(0.01f, 0.5f, 0x41);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-GyverHC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
+GyverHC595<SHIFTS, HC_PINS> reg(ST CP, DS, SHCP);
 EncButton eb(2, 3, 4);
 Data data;
 
-void setup(){
-	Serial.begin(115200);
-	while(!Serial);
-	Serial.println("Serial OK");
-	while (!ina.begin());
-	Serial.println("INA OK");
+void setup() {
+  Serial.begin(115200);
+  while (!Serial) {
+  }
+  Serial.println("Serial OK");
 
-	lcd.begin();
-	lcd.backlight();
-	lcd.setCursor(0, 0);
-	lcd.print("Electric");
-	lcd.setCursor(2, 1);
-	lcd.print("Acupuncture");
-	delay(3000);
-	lcd.clear();
+  while (!ina.begin()) {
+  }
+  Serial.println("INA OK");
 
-	reg.clearAll();
-	reg.update();
-	reg.writeAll(false);	
-	}
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Electric");
+  lcd.setCursor(2, 1);
+  lcd.print("Acupuncture");
+  delay(3000);
+  lcd.clear();
 
-void loop(){
-	display();
-	setting();
-	sensor();
-	work();
-	enc();
-	}
+  reg.clearAll();
+  reg.writeAll(false);
+  reg.update();
+}
+
+void loop() {
+  display();
+  setting();
+  sensor();
+  work();
+  enc();
+}

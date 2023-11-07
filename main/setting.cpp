@@ -1,5 +1,6 @@
 #include "main.h"
 
 void setting(){
-if (data.Se)
+if (data.Settings)
 }
+
