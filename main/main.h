@@ -1,10 +1,10 @@
 #pragma once
 #pragma pack(1, push)
 
-#include ".lib/EncButton.h"
-#include ".lib/GyverHC595.h"
-#include ".lib/GyverINA.h"
-#include ".lib/LiquidCrystal_I2C.h"
+#include "./lib/EncButton.h"
+#include "./lib/GyverHC595.h"
+#include "./lib/GyverINA.h"
+#include "./lib/LiquidCrystal_I2C.h"
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Print.h>
@@ -21,19 +21,21 @@
 
 typedef struct {
   bool out[ALL_DATA]{};
-  uint8_t prog_1[ALL_DATA]{};
-  uint8_t prog_2[ALL_DATA / 2][2];
+  uint32_t timer = 0;
+  uint32_t time = 0;
   uint16_t i = 0;
   float Voltage;
+  float OldVoltage;
   float Current;
-  bool StartMenu;
-  bool Work;
-  uint8_t Display;
-  uint8_t Program;
+  float OldCurrent;
+  bool StartMenu = true;
+  bool Work = false;
+  bool Send = false;
   bool Settings = false;
-  bool WorkMenu;
+  bool WorkMenu = false;
+  uint8_t Display;
+  uint8_t Program;  
   bool DisplayRedraw;
-  uint32_t timer = 0;
 } Data;
 
 extern EncButton eb;

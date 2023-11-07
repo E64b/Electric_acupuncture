@@ -28,6 +28,10 @@ void setup() {
   reg.clearAll();
   reg.writeAll(false);
   reg.update();
+
+  for (uint16_t i = 0; i < ALL_DATA; i++) {
+    data.out[i] = false;
+  }
 }
 
 void loop() {

@@ -1,6 +1,3 @@
 #include "main.h"
 
-void enc(){
-	eb.tick();
-
-	}
+void enc() { eb.tick(); }
