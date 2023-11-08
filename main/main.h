@@ -28,6 +28,7 @@ typedef struct {
   float OldVoltage;
   float Current;
   float OldCurrent;
+  float MaxCurrent;
   bool StartMenu = true;
   bool Work = false;
   bool Send = false;
