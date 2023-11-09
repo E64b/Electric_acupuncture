@@ -18,7 +18,7 @@ void display() {
       lcd.setCursor(0, 0);
       lcd.printstr("Step ");
       lcd.printstr(data.i);
-      lcd.printstr()
+      lcd.printstr();
       lcd.setCursor(0, 1);
     }
 
