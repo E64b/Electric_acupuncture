@@ -26,20 +26,20 @@ typedef struct {
   uint32_t time = 0;
   uint16_t i = 0;
 
-  float Voltage;
-  float OldVoltage;
-  float Current;
-  float OldCurrent;
-  float MaxCurrent;
+  float voltage;
+  float oldVoltage;
+  float current;
+  float oldCurrent;
+  float maxCurrent;
 
   bool displayRedraw = true;
-  bool StartMenu = true;
+  bool startMenu = true;
   bool work = false;
-  bool Send = false;
+  bool send = false;
   bool settings = false;
-  bool WorkMenu = false;
+  bool workMenu = false;
 
-  uint8_t Display;
+  uint8_t display;
   uint8_t program;
 } Data;
 

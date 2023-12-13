@@ -27,13 +27,13 @@ inline void LiquidCrystal_I2C::write(uint8_t value){
 
 // When the display powers up, it is configured as follows:
 //
-// 1. Display clear
+// 1. display clear
 // 2. Function set: 
 //    DL = 1; 8-bit interface data 
 //    N = 0; 1-line display 
 //    F = 0; 5x8 dot character font 
-// 3. Display on/off control: 
-//    D = 0; Display off 
+// 3. display on/off control: 
+//    D = 0; display off 
 //    C = 0; Cursor off 
 //    B = 0; Blinking off 
 // 4. Entry mode set: 

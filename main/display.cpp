@@ -1,4 +1,5 @@
 #include "main.h"
+
 void display() {
   if (data.displayRedraw) {
     data.displayRedraw = false;
@@ -22,7 +23,7 @@ void display() {
       lcd.setCursor(0, 1);
     }
 
-    if (data.StartMenu) {
+    if (data.startMenu) {
     }
   }
 }

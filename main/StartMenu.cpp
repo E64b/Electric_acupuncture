@@ -1,7 +1,7 @@
 #include "main.h"
 
-void StartMenu() {
-  if (data.StartMenu) {
+void startMenu() {
+  if (data.startMenu) {
     if (eb.left()) {
       if (data.program >= 1) {
         data.program--;
@@ -17,27 +17,27 @@ void StartMenu() {
     }
 
     if (eb.leftH()) {
-      if (data.MaxCurrent >= 1) {
-        data.MaxCurrent--;
+      if (data.maxCurrent >= 1) {
+        data.maxCurrent--;
         data.displayRedraw = true;
       }
     }
 
     if (eb.rightH()) {
-      if (data.MaxCurrent < 500) {
-        data.MaxCurrent++;
+      if (data.maxCurrent < 500) {
+        data.maxCurrent++;
         data.displayRedraw = true;
       }
     }
 
     if (eb.click()) {
-      data.StartMenu = false;
+      data.startMenu = false;
       data.Work = true;
       data.displayRedraw = true;
     }
 
     if (eb.hold()) {
-      data.StartMenu = false;
+      data.startMenu = false;
       if ((data.program == 1) or (data.program == 2)) {
         data.Settings = true;
       } else {

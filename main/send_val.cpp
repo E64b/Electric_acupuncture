@@ -1,8 +1,8 @@
 #include "main.h"
 
 void send_val() {
-  if (data.Send) {
+  if (data.send) {
     reg.update();
-    data.Send = false;
+    data.send = false;
   }
 }

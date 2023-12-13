@@ -1,11 +1,11 @@
 #include "main.h"
 
 void sensor() {
-  data.Voltage = ina.getVoltage();
-  data.Current = ina.getCurrent();
-  if (data.OldCurrent != data.Current || data.OldVoltage != data.Voltage) {
+  data.voltage = ina.getVoltage();
+  data.current = ina.getCurrent();
+  if (data.oldCurrent != data.current || data.oldVoltage != data.voltage) {
     data.displayRedraw = true;
-    data.OldCurrent = data.Current;
-    data.OldVoltage = data.Voltage;
+    data.oldCurrent = data.current;
+    data.oldVoltage = data.voltage;
   }
 }
