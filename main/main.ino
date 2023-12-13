@@ -1,8 +1,8 @@
 #include "main.h"
 
-INA219 ina(0.01f, 0.5f, 0x41);
+INA219 ina(0.1f, 0.5f, 0x40);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-GyverHC595<SHIFTS, HC_PINS> reg(ST CP, DS, SHCP);
+GyverHC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
 EncButton eb(2, 3, 4);
 Data data;
 
@@ -16,6 +16,18 @@ void setup() {
   }
   Serial.println("INA OK");
 
+  ina.setResolution(INA219_VSHUNT, INA219_RES_12BIT);
+  ina.setResolution(INA219_VBUS, INA219_RES_12BIT);
+
+  reg.clearAll();
+  reg.writeAll(false);
+
+  for (uint16_t i = 0; i < ALL_DATA; i++) {
+    data.out[i] = false;
+    reg.clear(i);
+  }
+  reg.update();
+
   lcd.begin();
   lcd.backlight();
   lcd.setCursor(0, 0);
@@ -24,14 +36,6 @@ void setup() {
   lcd.print("Acupuncture");
   delay(3000);
   lcd.clear();
-
-  reg.clearAll();
-  reg.writeAll(false);
-  reg.update();
-
-  for (uint16_t i = 0; i < ALL_DATA; i++) {
-    data.out[i] = false;
-  }
 }
 
 void loop() {

@@ -1,3 +1,4 @@
+#include "main.h"
 #include "./prog/1.h"
 #include "./prog/10.h"
 #include "./prog/11.h"
@@ -20,10 +21,9 @@
 #include "./prog/7.h"
 #include "./prog/8.h"
 #include "./prog/9.h"
-#include "main.h"
 
-uint8_t *GetProg(uint8_t program) {
-  switch (program) {
+uint8_t *GetProg(uint8_t data.program) {
+  switch (data.program) {
   case 1:
     return (uint8_t *)_1;
   case 2:
