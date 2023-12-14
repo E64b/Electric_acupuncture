@@ -2,7 +2,7 @@
 
 INA219 ina(0.1f, 0.5f, 0x40);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-GyverHC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
+HC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
 EncButton eb(2, 3, 4);
 Data data;
 

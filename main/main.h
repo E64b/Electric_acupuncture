@@ -5,10 +5,10 @@
 #include <EEPROM.h>
 #include <Print.h>
 #include <Wire.h>
-#include "EncButton.h"
-#include "GyverHC595.h"
-#include "INA219.h"
-#include "LiquidCrystal_I2C.h"
+#include "lib/EncButton.h"
+#include "lib/HC595.h"
+#include "lib/INA219.h"
+#include "lib/LiquidCrystal_I2C.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -45,7 +45,7 @@ typedef struct {
 extern EncButton eb;
 extern INA219 ina;
 extern LiquidCrystal_I2C lcd;
-extern GyverHC595<SHIFTS, HC_PINS> reg;
+extern HC595<SHIFTS, HC_PINS> reg;
 extern Data data;
 
 void display();
