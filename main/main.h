@@ -24,8 +24,7 @@ typedef struct {
 
   uint32_t timer = 0;
   uint32_t time = 0;
-  uint16_t i = 0;
-
+  
   float voltage;
   float oldVoltage;
   float current;
