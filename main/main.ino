@@ -29,8 +29,8 @@ void setup() {
   }
   reg.update();
 
-  if (EEPROM.get(0, mem._1[0]) != mem._1[0]) {
-    EEPROM.write(0, mem);
+  if (EEPROM.get(0, mem.test_mem) != false) {
+    EEPROM.put(0, mem);
   }
 
   lcd.backlight();

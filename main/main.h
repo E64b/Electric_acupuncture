@@ -1,16 +1,16 @@
 #pragma once
 #pragma pack(1, push)
 
-#include <Arduino.h>
-#include <EEPROM.h>
-#include <Print.h>
-#include <Wire.h>
+#include "./prog/1.h"
+#include "./prog/2.h"
 #include "lib/EncButton.h"
 #include "lib/HC595.h"
 #include "lib/INA219.h"
 #include "lib/LiquidCrystal_I2C.h"
-#include "./prog/1.h"
-#include "./prog/2.h"
+#include <Arduino.h>
+#include <EEPROM.h>
+#include <Print.h>
+#include <Wire.h>
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -22,6 +22,7 @@
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
 
 struct Memory {
+  bool test_mem = false;
   uint16_t _1[64];
   uint16_t _2[32];
 };
@@ -31,6 +32,7 @@ typedef struct {
   uint16_t time[ALL_DATA]{};
 
   uint32_t timer = 0;
+  uint8_t time = 0;
   uint16_t i = 0;
 
   float voltage;
