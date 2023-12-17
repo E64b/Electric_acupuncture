@@ -18,15 +18,15 @@ void setting() {
 
     if (eb.leftH()) {
       if (data.i >= 1) {
-        i--;
+        data.i--;
         data.displayRedraw = true;
       }
     }
 
     if (eb.rightH()) {
-      if (i < ALL_DATA) {
+      if (data.i < ALL_DATA) {
         data.displayRedraw = true;
-        i++
+        data.i++
       }
     }
 
@@ -36,7 +36,7 @@ void setting() {
     }
 
     if (eb.hold()) {
-
+      EEPROM.put(0, mem);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("SETTING SAVE");

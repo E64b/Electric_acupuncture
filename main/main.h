@@ -9,6 +9,8 @@
 #include "lib/HC595.h"
 #include "lib/INA219.h"
 #include "lib/LiquidCrystal_I2C.h"
+#include "./prog/1.h"
+#include "./prog/2.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -19,12 +21,18 @@
 #define ONE_SHIFT_DATA 8
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
 
+struct Memory {
+  uint16_t _1[64];
+  uint16_t _2[32];
+};
+
 typedef struct {
   bool out[ALL_DATA]{};
+  uint16_t time[ALL_DATA]{};
 
   uint32_t timer = 0;
-  uint32_t time = 0;
-  
+  uint16_t i = 0;
+
   float voltage;
   float oldVoltage;
   float current;
@@ -47,6 +55,7 @@ extern INA219 ina;
 extern LiquidCrystal_I2C lcd;
 extern HC595<SHIFTS, HC_PINS> reg;
 extern Data data;
+extern Memory mem;
 
 void display();
 void setting();
