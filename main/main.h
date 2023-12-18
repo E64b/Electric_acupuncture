@@ -11,6 +11,8 @@
 #include <EEPROM.h>
 #include <Print.h>
 #include <Wire.h>
+#include <inttypes.h>
+#include <stdio.h>
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -20,6 +22,9 @@
 #define HC595_DELAY 0
 #define ONE_SHIFT_DATA 8
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
+
+/*SETUP*/
+#define TIME_TO_STEP 60 // Step time for 3-22 program in sec
 
 struct Memory {
   bool test_mem = false;
@@ -48,8 +53,9 @@ typedef struct {
   bool settings = false;
   bool workMenu = false;
 
-  uint8_t display;
-  uint8_t program;
+  uint32_t timeStep = TIME_TO_STEP * 1000;
+  uint8_t display = 0;
+  uint8_t program = 0;
 } Data;
 
 extern EncButton eb;

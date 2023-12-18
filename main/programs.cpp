@@ -1,14 +1,7 @@
 #pragma once
 
 #include "main.h"
-/*
-#include "./prog/3.h"
-#include "./prog/4.h"
-#include "./prog/5.h"
-#include "./prog/6.h"
-#include "./prog/7.h"
-#include "./prog/8.h"
-#include "./prog/9.h"
+
 #include "./prog/10.h"
 #include "./prog/11.h"
 #include "./prog/12.h"
@@ -22,10 +15,17 @@
 #include "./prog/20.h"
 #include "./prog/21.h"
 #include "./prog/22.h"
-*/
-const uint16_t *GetProg(uint16_t data.program) {
+#include "./prog/3.h"
+#include "./prog/4.h"
+#include "./prog/5.h"
+#include "./prog/6.h"
+#include "./prog/7.h"
+#include "./prog/8.h"
+#include "./prog/9.h"
+
+const uint8_t *GetProg(uint8_t data.program) {
   switch (data.program) {
-  /* case 3:
+  case 3:
     return _3;
   case 4:
     return _4;
@@ -64,8 +64,7 @@ const uint16_t *GetProg(uint16_t data.program) {
   case 21:
     return _21;
   case 22:
-    return _22
-    */
+    return _22;
   default:
     return NULL;
   }
