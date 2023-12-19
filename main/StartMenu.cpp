@@ -2,42 +2,42 @@
 
 void startMenu() {
   if (data.startMenu) {
-    if (eb.left()) {
+    if (enc.left()) {
       if (data.program >= 1) {
         data.program--;
         data.displayRedraw = true;
       }
     }
 
-    if (eb.right()) {
+    if (enc.right()) {
       if (data.program <= 21) {
         data.program++;
         data.displayRedraw = true;
       }
     }
 
-    if (eb.leftH()) {
+    if (enc.leftH()) {
       if (data.maxCurrent >= 1) {
         data.maxCurrent--;
         data.displayRedraw = true;
       }
     }
 
-    if (eb.rightH()) {
+    if (enc.rightH()) {
       if (data.maxCurrent < 500) {
         data.maxCurrent++;
         data.displayRedraw = true;
       }
     }
 
-    if (eb.click()) {
+    if (enc.click()) {
       data.startMenu = false;
       data.work = true;
       data.displayRedraw = true;
       data.display = 2;
     }
 
-    if (eb.hold()) {
+    if (enc.hold()) {
       data.startMenu = false;
       if ((data.program == 1) or (data.program == 2)) {
         data.settings = true;

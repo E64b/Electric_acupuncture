@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Print.h>
@@ -7,10 +9,10 @@
 
 // #include "./prog/1.h"
 // #include "./prog/2.h"
-#include "./lib/EncButton.h"
-#include "./lib/HC595.h"
-#include "./lib/INA219.h"
-#include "./lib/LiquidCrystal_I2C.h"
+#include "lib/EncButton.h"
+#include "lib/HC595.h"
+#include "lib/INA219.h"
+#include "lib/LiquidCrystal_I2C.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -27,8 +29,6 @@
 
 /*END SETUP*/
 
-//#pragma pack(1, push)
-
 struct DataMemory {
   /*First init, DON`T TOUCH*/
   bool test_mem = false;
@@ -42,7 +42,10 @@ struct DataMemory {
   uint16_t _2[32] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
+  /*First init, DON`T TOUCH*/
 };
+
+#pragma pack(push, 1)
 
 typedef struct {
   bool out[ALL_DATA]{};
@@ -66,14 +69,12 @@ typedef struct {
   bool settings = false;
   bool workMenu = false;
 
-  uint32_t timeStep = TIME_TO_STEP * 1000;
+  uint32_t timeStep = TIME_TO_STEP * 1000; //TODO �������� ��������� ������� �� ���
   uint8_t display = 0;
   uint8_t program = 1;
 } Data;
 
-//#pragma pack(pop)
-
-extern EncButton eb;
+extern EncButton enc;
 extern INA219 ina;
 extern LiquidCrystal_I2C lcd;
 extern HC595<SHIFTS, HC_PINS> reg;
@@ -87,3 +88,5 @@ void work();
 void setting();
 void send_val();
 void startMenu();
+
+#pragma pack(pop)

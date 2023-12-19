@@ -42,7 +42,9 @@ public:
       Wire.begin();
 #else
     Wire.begin();
-#endif if (!testConnection()) return false;
+#endif
+    if (!testConnection())
+      return false;
     calibrate();
     return true;
   }
@@ -76,6 +78,7 @@ public:
 
   float getShuntVoltage(void) {
     setCalibration(_cal_value);
+
     int16_t value = readRegister(INA219_SHUNT_REG_ADDR);
     return value * 0.00001f;
   }
@@ -87,12 +90,14 @@ public:
 
   float getCurrent(void) {
     setCalibration(_cal_value);
+
     int16_t value = readRegister(INA219_CUR_REG_ADDR);
     return value * _current_lsb;
   }
 
   float getPower(void) {
     setCalibration(_cal_value);
+
     uint16_t value = readRegister(INA219_POWER_REG_ADDR);
     return value * _power_lsb;
   }
@@ -101,9 +106,11 @@ private:
   const uint8_t _iic_address = 0x00;
   const float _r_shunt = 0.0;
   const float _i_max = 0.0;
+
   float _current_lsb = 0.0;
   float _power_lsb = 0.0;
   uint16_t _cal_value = 0;
+
   void writeRegister(uint8_t address, uint16_t data) {
     Wire.beginTransmission(_iic_address);
     Wire.write(address);
@@ -127,12 +134,17 @@ private:
 
   void calibrate(void) {
     writeRegister(INA219_CFG_REG_ADDR, 0x8000);
+
     _current_lsb = _i_max / 32768.0f;
     _power_lsb = _current_lsb * 20.0f;
     _cal_value = trunc(0.04096f / (_current_lsb * _r_shunt));
+
     setCalibration(_cal_value);
+
     uint16_t cfg_register = readRegister(INA219_CFG_REG_ADDR) & ~(0b11 << 11);
+
     uint16_t vshunt_max_mv = (_r_shunt * _i_max) * 1000;
+
     if (vshunt_max_mv <= 40)
       cfg_register |= 0b00 << 11;
     else if (vshunt_max_mv <= 80)

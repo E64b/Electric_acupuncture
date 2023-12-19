@@ -3,7 +3,7 @@
 INA219 ina(0.1f, 0.5f, 0x40);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 HC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
-EncButton eb(2, 3, 4);
+EncButton enc(2, 3, 4);
 Data data;
 DataMemory DataMem;
 
@@ -46,7 +46,7 @@ void setup() {
 }
 
 void loop() {
-  eb.tick();
+  enc.tick();
   display();
   sensor();
   work();
