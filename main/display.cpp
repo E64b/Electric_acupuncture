@@ -3,8 +3,6 @@
 #define START_SETTING 0
 #define SETTING 1
 #define WORK 2
-#define
-#define
 
 void display() {
   if (data.displayRedraw) {
@@ -14,6 +12,13 @@ void display() {
     switch (data.display) {
     case START_SETTING:
       startMenu();
+      lcd.setCursor(0, 0);
+      lcd.print("Prog ");
+      lcd.print(data.program);
+      lcd.print(" of 22");
+      lcd.setCursor(0, 1);
+      lcd.print("Max I= ");
+      lcd.print(data.maxCurrent);
       break;
 
     case SETTING:
@@ -21,17 +26,15 @@ void display() {
       break;
 
     case WORK:
+      work();
       lcd.setCursor(0, 0);
       lcd.print("Step ");
-      lcd.print(data.i);
-      lcd.print();
-      lcd.setCursor(0, 1);
-      lcd.setCursor(0, 0);
-      lcd.print("Setting I=");
-      lcd.print(data.i);
+      lcd.print(data.step);
+      lcd.print(" I= ");
+      lcd.print(data.current);
       lcd.setCursor(0, 1);
       lcd.print("Time ");
-      lcd.print(data.time);
+      lcd.print(data.timeStep);
       lcd.print(" sec");
       break;
     }

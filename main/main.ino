@@ -1,11 +1,11 @@
 #include "main.h"
 
-INA219 ina(100.0f, 0.5f, 0x40);
+INA219 ina(0.1f, 0.5f, 0x40);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 HC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
 EncButton eb(2, 3, 4);
 Data data;
-Memory mem;
+DataMemory DataMem;
 
 void setup() {
   Serial.begin(115200);
@@ -29,10 +29,13 @@ void setup() {
   }
   reg.update();
 
-  if (EEPROM.get(0, mem.test_mem) != false) {
-    EEPROM.write(0, mem);
+  if (EEPROM.get(0, DataMem.test_mem) != false) {
+    EEPROM.put(0, DataMem);
+  } else {
+    EEPROM.get(0, DataMem);
   }
 
+  lcd.init();
   lcd.backlight();
   lcd.setCursor(0, 0);
   lcd.print("Electric");
@@ -43,9 +46,9 @@ void setup() {
 }
 
 void loop() {
-  enc();
+  eb.tick();
   display();
-  setting();
   sensor();
   work();
+  send_val();
 }

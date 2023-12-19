@@ -32,16 +32,19 @@ void startMenu() {
 
     if (eb.click()) {
       data.startMenu = false;
-      data.Work = true;
+      data.work = true;
       data.displayRedraw = true;
+      data.display = 2;
     }
 
     if (eb.hold()) {
       data.startMenu = false;
       if ((data.program == 1) or (data.program == 2)) {
-        data.Settings = true;
+        data.settings = true;
+        data.display = 1;
       } else {
-        data.Work = true;
+        data.work = true;
+        data.display = 2;
       }
       data.displayRedraw = true;
     }

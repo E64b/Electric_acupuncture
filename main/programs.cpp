@@ -23,8 +23,8 @@
 #include "./prog/8.h"
 #include "./prog/9.h"
 
-const uint8_t *GetProg(uint8_t data.program) {
-  switch (data.program) {
+const uint8_t *GetProg(uint8_t program) {
+  switch (program) {
   case 3:
     return _3;
   case 4:

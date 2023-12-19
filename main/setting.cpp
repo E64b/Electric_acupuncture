@@ -3,15 +3,15 @@
 void setting() {
   if (data.settings) {
     if (eb.left()) {
-      if (data.time >= 1000) {
-        data.time - 1000;
+      if (data.setTime >= 1000) {
+        data.setTime --;
         data.displayRedraw = true;
       }
     }
 
     if (eb.right()) {
-      if (data.time <= 998000) {
-        data.time + 1000;
+      if (data.setTime <= 998000) {
+        data.setTime++;
         data.displayRedraw = true;
       }
     }
@@ -26,17 +26,19 @@ void setting() {
     if (eb.rightH()) {
       if (data.i < ALL_DATA) {
         data.displayRedraw = true;
-        data.i++
+        data.i++;
       }
     }
 
     if (eb.click()) {
-      data.Settings = false;
+      data.settings = false;
+      data.work = true;
       data.displayRedraw = true;
+      data.display = 2;
     }
 
     if (eb.hold()) {
-      EEPROM.put(0, mem);
+      EEPROM.put(0, DataMem);
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("SETTING SAVE");

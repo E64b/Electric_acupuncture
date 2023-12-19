@@ -1,18 +1,16 @@
-#pragma once
-#pragma pack(1, push)
-
-#include "./prog/1.h"
-#include "./prog/2.h"
-#include "lib/EncButton.h"
-#include "lib/HC595.h"
-#include "lib/INA219.h"
-#include "lib/LiquidCrystal_I2C.h"
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Print.h>
 #include <Wire.h>
 #include <inttypes.h>
 #include <stdio.h>
+
+// #include "./prog/1.h"
+// #include "./prog/2.h"
+#include "./lib/EncButton.h"
+#include "./lib/HC595.h"
+#include "./lib/INA219.h"
+#include "./lib/LiquidCrystal_I2C.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -26,10 +24,19 @@
 /*SETUP*/
 #define TIME_TO_STEP 60 // Step time for 3-22 program in sec
 
-struct Memory {
+//#pragma pack(1, push)
+
+struct DataMemory {
   bool test_mem = false;
-  uint16_t _1[64];
-  uint16_t _2[32];
+  uint16_t _1[64] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
+
+  uint16_t _2[32] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
 };
 
 typedef struct {
@@ -37,8 +44,9 @@ typedef struct {
   uint16_t time[ALL_DATA]{};
 
   uint32_t timer = 0;
-  uint8_t time = 0;
+  uint8_t setTime;
   uint16_t i = 0;
+  uint8_t step;
 
   float voltage;
   float oldVoltage;
@@ -55,20 +63,22 @@ typedef struct {
 
   uint32_t timeStep = TIME_TO_STEP * 1000;
   uint8_t display = 0;
-  uint8_t program = 0;
+  uint8_t program = 1;
 } Data;
+
+//#pragma pack(pop)
 
 extern EncButton eb;
 extern INA219 ina;
 extern LiquidCrystal_I2C lcd;
 extern HC595<SHIFTS, HC_PINS> reg;
 extern Data data;
-extern Memory mem;
+extern DataMemory DataMem;
 
 void display();
-void setting();
 void sensor();
 void work();
-void enc();
 
-#pragma pack(pop)
+void setting();
+void send_val();
+void startMenu();

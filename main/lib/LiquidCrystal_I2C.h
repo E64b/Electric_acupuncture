@@ -41,7 +41,10 @@
 #define LCD_BACKLIGHT 0x08
 #define LCD_NOBACKLIGHT 0x00
 
-#define En B00000100 #define Rw B00000010 #define Rs B00000001
+#define En B00000100 
+#define Rw B00000010 
+#define Rs B00000001
+
 class LiquidCrystal_I2C : public Print {
 public:
   LiquidCrystal_I2C(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows);
