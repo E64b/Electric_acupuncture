@@ -22,18 +22,23 @@
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
 
 /*SETUP*/
+
 #define TIME_TO_STEP 60 // Step time for 3-22 program in sec
+
+/*END SETUP*/
 
 //#pragma pack(1, push)
 
 struct DataMemory {
+  /*First init, DON`T TOUCH*/
   bool test_mem = false;
+  /*First init, DON`T TOUCH*/
   uint16_t _1[64] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
-
+  /*First init, DON`T TOUCH*/
   uint16_t _2[32] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
