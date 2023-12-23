@@ -29,14 +29,14 @@ void setup() {
   }
   reg.update();
 
-  if (EEPROM.get(0, DataMem.test_mem) != false) {
+  if (EEPROM.get(0, DataMem.testMem) != false) {
     EEPROM.put(0, DataMem);
   } else {
     EEPROM.get(0, DataMem);
   }
 
   lcd.init();
-  lcd.backlight();
+  lcd.setBacklight(BACKLIGHT);
   lcd.setCursor(0, 0);
   lcd.print("Electric");
   lcd.setCursor(2, 1);
@@ -47,7 +47,7 @@ void setup() {
 
 void loop() {
   enc.tick();
-  display();
+  lcdDisplay();
   sensor();
   work();
   send_val();

@@ -1,15 +1,13 @@
-#pragma once
-
 #include <Arduino.h>
-#include <EEPROM.h>
-#include <Print.h>
+#include <stdio.h>
 #include <Wire.h>
 #include <inttypes.h>
-#include <stdio.h>
+#include <EEPROM.h>
+#include <Print.h>
 
 // #include "./prog/1.h"
 // #include "./prog/2.h"
-#include "lib/EncButton.h"
+#include "lib/Enc.h"
 #include "lib/HC595.h"
 #include "lib/INA219.h"
 #include "lib/LiquidCrystal_I2C.h"
@@ -26,12 +24,13 @@
 /*SETUP*/
 
 #define TIME_TO_STEP 60 // Step time for 3-22 program in sec
+#define BACKLIGHT true //lcd backlight true or false
 
 /*END SETUP*/
 
 struct DataMemory {
   /*First init, DON`T TOUCH*/
-  bool test_mem = false;
+  bool testMem = false;
   /*First init, DON`T TOUCH*/
   uint16_t _1[64] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
@@ -69,7 +68,7 @@ typedef struct {
   bool settings = false;
   bool workMenu = false;
 
-  uint32_t timeStep = TIME_TO_STEP * 1000; //TODO �������� ��������� ������� �� ���
+  uint32_t timeStep = TIME_TO_STEP; //TODO �������� ��������� ������� �� ���
   uint8_t display = 0;
   uint8_t program = 1;
 } Data;
@@ -80,8 +79,9 @@ extern LiquidCrystal_I2C lcd;
 extern HC595<SHIFTS, HC_PINS> reg;
 extern Data data;
 extern DataMemory DataMem;
+extern const uint8_t *GetProg(uint8_t prog);
 
-void display();
+void lcdDisplay();
 void sensor();
 void work();
 

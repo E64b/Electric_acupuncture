@@ -3,8 +3,9 @@
 #define START_SETTING 0
 #define SETTING 1
 #define WORK 2
+#define ERROR 10
 
-void display() {
+void lcdDisplay() {
   if (data.displayRedraw) {
     data.displayRedraw = false;
     lcd.clear();
@@ -13,11 +14,13 @@ void display() {
     case START_SETTING:
       startMenu();
       lcd.setCursor(0, 0);
-      lcd.print("Prog ");
+      lcd.print("Prog");
+      lcd.print(' ');
       lcd.print(data.program);
-      lcd.print(" of 22");
+      lcd.print("of 22");
       lcd.setCursor(0, 1);
-      lcd.print("Max I= ");
+      lcd.print("Max I=");
+      lcd.print(' ');
       lcd.print(data.maxCurrent);
       break;
 
@@ -28,14 +31,25 @@ void display() {
     case WORK:
       work();
       lcd.setCursor(0, 0);
-      lcd.print("Step ");
+      lcd.print("Step");
+      lcd.print(' ');
       lcd.print(data.step);
-      lcd.print(" I= ");
+      lcd.print(' ');
+      lcd.print("I=");
       lcd.print(data.current);
       lcd.setCursor(0, 1);
-      lcd.print("Time ");
+      lcd.print("Time");
+      lcd.print(' ');
       lcd.print(data.timeStep);
-      lcd.print(" sec");
+      lcd.print(' ');
+      lcd.print("sec");
+      break;
+
+    case ERROR:
+      lcd.setCursor(0, 0);
+      lcd.print("!!!ERROR!!!");
+      lcd.setCursor(0, 1);
+      lcd.print("!!!OVERLOAD!!!");
       break;
     }
   }

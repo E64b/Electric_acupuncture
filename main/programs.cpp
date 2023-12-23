@@ -2,6 +2,13 @@
 
 #include "main.h"
 
+#include "./prog/3.h"
+#include "./prog/4.h"
+#include "./prog/5.h"
+#include "./prog/6.h"
+#include "./prog/7.h"
+#include "./prog/8.h"
+#include "./prog/9.h"
 #include "./prog/10.h"
 #include "./prog/11.h"
 #include "./prog/12.h"
@@ -15,16 +22,9 @@
 #include "./prog/20.h"
 #include "./prog/21.h"
 #include "./prog/22.h"
-#include "./prog/3.h"
-#include "./prog/4.h"
-#include "./prog/5.h"
-#include "./prog/6.h"
-#include "./prog/7.h"
-#include "./prog/8.h"
-#include "./prog/9.h"
 
-const uint8_t *GetProg(uint8_t program) {
-  switch (program) {
+const uint8_t *GetProg(uint8_t prog) {
+  switch (prog) {
   case 3:
     return _3;
   case 4:

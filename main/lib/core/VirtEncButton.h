@@ -9,46 +9,33 @@
 #define EB_FAST_T (EB_FAST_TIME)
 #endif
 
-// базовый клас энкодера с кнопкой
 class VirtEncButton : public VirtButton, public VirtEncoder {
 public:
-  // ====================== SET ======================
-  // установить таймаут быстрого поворота, мс
   void setFastTimeout(uint8_t tout) {
 #ifndef EB_FAST_TIME
     EB_FAST_T = tout;
 #endif
   }
 
-  // сбросить флаги энкодера и кнопки
   void clear() {
     VirtButton::clear();
     VirtEncoder::clear();
   }
 
-  // ====================== GET ======================
-  // нажатый поворот энкодера [событие]
   bool turnH() { return turn() && read_bf(EB_EHLD); }
 
-  // быстрый поворот энкодера [состояние]
   bool fast() { return read_ef(EB_FAST); }
 
-  // поворот направо [событие]
   bool right() { return read_ef(EB_DIR) && turn() && !read_bf(EB_EHLD); }
 
-  // поворот налево [событие]
   bool left() { return !read_ef(EB_DIR) && turn() && !read_bf(EB_EHLD); }
 
-  // нажатый поворот направо [событие]
   bool rightH() { return read_ef(EB_DIR) && turnH(); }
 
-  // нажатый поворот налево [событие]
   bool leftH() { return !read_ef(EB_DIR) && turnH(); }
 
-  // нажата кнопка энкодера. Аналог pressing() [состояние]
   bool encHolding() { return read_bf(EB_EHLD); }
 
-  // было действие с кнопки или энкодера, вернёт код события [событие]
   uint16_t action() {
     if (turn())
       return EB_TURN;
@@ -56,14 +43,8 @@ public:
       return VirtButton::action();
   }
 
-  // ====================== POLL ======================
-  // ISR
-  // обработка в прерывании (только энкодер). Вернёт 0 в покое, 1 или -1 при
-  // повороте
   int8_t tickISR(bool e0, bool e1) { return tickISR(e0 | (e1 << 1)); }
 
-  // обработка в прерывании (только энкодер). Вернёт 0 в покое, 1 или -1 при
-  // повороте
   int8_t tickISR(int8_t state) {
     state = VirtEncoder::pollEnc(state);
     if (state) {
@@ -74,11 +55,11 @@ public:
 #else
       for (uint8_t i = 0; i < 15; i += 3) {
         if (!(ebuffer & (1 << i))) {
-          ebuffer |= (1 << i); // turn
+          ebuffer |= (1 << i); 
           if (state > 0)
-            ebuffer |= (1 << (i + 1)); // dir
+            ebuffer |= (1 << (i + 1));
           if (checkFast())
-            ebuffer |= (1 << (i + 2)); // fast
+            ebuffer |= (1 << (i + 2));
           break;
         }
       }
@@ -87,11 +68,8 @@ public:
     return state;
   }
 
-  // TICK
-  // обработка энкодера и кнопки
   bool tick(bool e0, bool e1, bool btn) { return tick(e0 | (e1 << 1), btn); }
 
-  // обработка энкодера и кнопки. state = -1 для пропуска обработки энкодера
   bool tick(int8_t state, bool btn) {
     clear();
     bool f = tickRaw(state, btn);
@@ -103,16 +81,12 @@ public:
     return f;
   }
 
-  // обработка энкодера (в прерывании) и кнопки
   bool tick(bool btn) { return tick(-1, btn); }
 
-  // RAW
-  // обработка без сброса событий и вызова коллбэка
   bool tickRaw(bool e0, bool e1, bool btn) {
     return tickRaw(e0 | (e1 << 1), btn);
   }
 
-  // обработка без сброса событий и вызова коллбэка
   bool tickRaw(int8_t state, bool btn) {
     btn = VirtButton::tickRaw(btn);
 
@@ -137,20 +111,18 @@ public:
     }
     if (encf) {
       if (read_bf(EB_PRS))
-        set_bf(EB_EHLD); // зажать энкодер
+        set_bf(EB_EHLD);
       else
         clicks = 0;
       if (!read_bf(EB_TOUT))
-        set_bf(EB_TOUT); // таймаут
-      set_ef(EB_ETRN_R); // флаг поворота
+        set_bf(EB_TOUT);
+      set_ef(EB_ETRN_R);
     }
     return encf | btn;
   }
 
-  // обработка без сброса событий и вызова коллбэка (кнопка)
   bool tickRaw(bool btn) { return tickRaw(-1, btn); }
 
-  // ===================== PRIVATE =====================
 protected:
 #ifndef EB_FAST_TIME
   uint8_t EB_FAST_T = 30;
