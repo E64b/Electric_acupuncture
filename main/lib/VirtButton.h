@@ -1,4 +1,5 @@
 #pragma once
+
 #include <Arduino.h>
 
 #include "utils.h"
@@ -7,15 +8,16 @@
 #define EB_HOLD (1 << 1)
 #define EB_STEP (1 << 2)
 #define EB_RELEASE (1 << 3)
-#define EB_CLICK (1 << 4)
-#define EB_CLICKS (1 << 5)
-#define EB_TURN (1 << 6)
-#define EB_REL_HOLD (1 << 7)
-#define EB_REL_HOLD_C (1 << 8)
+#define EB_CLICK (1 << 4) 
+#define EB_CLICKS (1 << 5) 
+#define EB_TURN (1 << 6) 
+#define EB_REL_HOLD (1 << 7) 
+#define EB_REL_HOLD_C (1 << 8) 
 #define EB_REL_STEP (1 << 9)
 #define EB_REL_STEP_C (1 << 10)
 
 #define EB_SHIFT 4
+
 
 #ifdef EB_DEB_TIME
 #define EB_DEB_T (EB_DEB_TIME)
@@ -143,7 +145,8 @@ public:
   uint16_t getSteps() {
 #ifndef EB_NO_FOR
 #ifdef EB_STEP_TIME
-    return ftmr ? ((stepFor() + EB_STEP_T - 1) / EB_STEP_T) : 0;
+    return ftmr ? ((stepFor() + EB_STEP_T - 1) / EB_STEP_T)
+                : 0;
 #else
     return ftmr ? ((stepFor() + (EB_STEP_T << EB_SHIFT) - 1) /
                    (EB_STEP_T << EB_SHIFT))
@@ -302,32 +305,35 @@ protected:
     uint16_t ms = EB_UPTIME();
     uint16_t deb = ms - tmr;
 
-    if (s) {
+    if (s) {                  
       if (!read_bf(EB_PRS)) {
         if (!read_bf(EB_DEB) && EB_DEB_T) {
-          set_bf(EB_DEB);
-          tmr = ms;
-        } else {
-          if (deb >= EB_DEB_T || !EB_DEB_T) {
-            set_bf(EB_PRS | EB_PRS_R);
+          set_bf(EB_DEB); 
+          tmr = ms;     
+        } else {        
+          if (deb >= EB_DEB_T || !EB_DEB_T) { 
+            set_bf(EB_PRS | EB_PRS_R);        
 #ifndef EB_NO_FOR
             ftmr = ms;
 #endif
-            tmr = ms;
+            tmr = ms; 
           }
         }
-      } else {
+      } else { 
         if (!read_bf(EB_EHLD)) {
-          if (!read_bf(EB_HLD)) {
+          if (!read_bf(EB_HLD)) { 
 #ifdef EB_HOLD_TIME
-            if (deb >= (uint16_t)EB_HOLD_T) {
+            if (deb >=
+                (uint16_t)EB_HOLD_T) { 
 #else
-            if (deb >= (uint16_t)(EB_HOLD_T << EB_SHIFT)) {
+            if (deb >=
+                (uint16_t)(EB_HOLD_T
+                           << EB_SHIFT)) { 
 #endif
-              set_bf(EB_HLD_R | EB_HLD);
-              tmr = ms;
+              set_bf(EB_HLD_R | EB_HLD); 
+              tmr = ms;                
             }
-          } else {
+          } else { 
 #ifdef EB_STEP_TIME
             if (deb >= (uint16_t)(read_bf(EB_STP) ? EB_STEP_T : EB_HOLD_T)) {
 #else
@@ -335,35 +341,35 @@ protected:
                                                   : (EB_HOLD_T << EB_SHIFT))) {
 #endif
               set_bf(EB_STP | EB_STP_R);
-              tmr = ms;
+              tmr = ms;           
             }
           }
         }
       }
-    } else {
-      if (read_bf(EB_PRS)) {
-        if (deb >= EB_DEB_T) {
+    } else {                  
+      if (read_bf(EB_PRS)) {  
+        if (deb >= EB_DEB_T) { 
           if (!read_bf(EB_HLD))
-            clicks++;
+            clicks++; 
           if (read_bf(EB_EHLD))
-            clicks = 0;
+            clicks = 0;             
           set_bf(EB_REL | EB_REL_R);
-          clr_bf(EB_PRS);
+          clr_bf(EB_PRS);     
         }
       } else if (read_bf(EB_REL)) {
         if (!read_bf(EB_EHLD)) {
-          set_bf(EB_REL_R);
+          set_bf(EB_REL_R); 
         }
         clr_bf(EB_REL | EB_EHLD);
-        tmr = ms;
-      } else if (clicks) {
+        tmr = ms;          
+      } else if (clicks) { 
 #ifdef EB_CLICK_TIME
         if (read_bf(EB_HLD | EB_STP) || deb >= (uint16_t)EB_CLICK_T)
-          set_bf(EB_CLKS_R);
+          set_bf(EB_CLKS_R); 
 #else
         if (read_bf(EB_HLD | EB_STP) ||
             deb >= (uint16_t)(EB_CLICK_T << EB_SHIFT))
-          set_bf(EB_CLKS_R);
+          set_bf(EB_CLKS_R); 
 #endif
 #ifndef EB_NO_FOR
         else if (ftmr)
@@ -375,10 +381,10 @@ protected:
 #ifndef EB_NO_FOR
         ftmr = 0;
 #endif
-        tmr = ms;
+        tmr = ms; 
       }
       if (read_bf(EB_DEB))
-        clr_bf(EB_DEB);
+        clr_bf(EB_DEB); 
     }
     return read_bf(EB_CLKS_R | EB_PRS_R | EB_HLD_R | EB_STP_R | EB_REL_R);
   }

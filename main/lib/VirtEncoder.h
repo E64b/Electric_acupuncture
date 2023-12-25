@@ -1,4 +1,5 @@
 #pragma once
+
 #include <Arduino.h>
 
 #include "utils.h"
@@ -35,7 +36,6 @@ public:
 
   void initEnc(int8_t v) { prev = v; }
 
-  // סבנמסטעü פכאדט סמבûעטי
   void clear() {
     if (read_ef(EB_ETRN_R))
       clr_ef(EB_ETRN_R);

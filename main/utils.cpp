@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "./lib/utils.h"
 
 bool EBread(const uint8_t pin) {
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)

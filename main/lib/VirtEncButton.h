@@ -1,4 +1,5 @@
 #pragma once
+
 #include <Arduino.h>
 
 #include "VirtButton.h"
@@ -57,7 +58,7 @@ public:
         if (!(ebuffer & (1 << i))) {
           ebuffer |= (1 << i); 
           if (state > 0)
-            ebuffer |= (1 << (i + 1));
+            ebuffer |= (1 << (i + 1)); 
           if (checkFast())
             ebuffer |= (1 << (i + 2));
           break;

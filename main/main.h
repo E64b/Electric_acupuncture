@@ -4,13 +4,12 @@
 #include <inttypes.h>
 #include <EEPROM.h>
 #include <Print.h>
+#include <SPI.h>
 
-// #include "./prog/1.h"
-// #include "./prog/2.h"
-#include "lib/Enc.h"
-#include "lib/HC595.h"
-#include "lib/INA219.h"
-#include "lib/LiquidCrystal_I2C.h"
+#include "./lib/HC595.h"
+#include "./lib/INA219.h"
+#include "./lib/LiquidCrystal_I2C.h"
+#include "./lib/Enc.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
