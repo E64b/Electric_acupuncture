@@ -1,160 +1,125 @@
-#ifndef _INA219_h
-#define _INA219_h
+#ifndef _LIB_ADAFRUIT_INA219_
+#define _LIB_ADAFRUIT_INA219_
 
-#include <Arduino.h>
+#include "Arduino.h"
+#include <Adafruit_BusIO_Register.h>
+#include <Adafruit_I2CDevice.h>
 #include <Wire.h>
 
-#define INA219_VBUS true
-#define INA219_VSHUNT false
-#define INA219_RES_9BIT 0b0000
-#define INA219_RES_10BIT 0b0001
-#define INA219_RES_11BIT 0b0010
-#define INA219_RES_12BIT 0b0011
-#define INA219_RES_12BIT_X2 0b1001
-#define INA219_RES_12BIT_X4 0b1010
-#define INA219_RES_12BIT_X8 0b1011
-#define INA219_RES_12BIT_X16 0b1100
-#define INA219_RES_12BIT_X32 0b1101
-#define INA219_RES_12BIT_X64 0b1110
-#define INA219_RES_12BIT_X128 0b1111
+#define INA219_CALC_ADDRESS(INA_ADDR0, INA_ADDR1)                              \
+  (0x40 | (INA_ADDR0 != 0 ? 0x01 : 0x00) | (INA_ADDR1 != 0 ? 0x04 : 0x00))
 
-#define INA219_CFG_REG_ADDR 0x00
-#define INA219_SHUNT_REG_ADDR 0x01
-#define INA219_VBUS_REG_ADDR 0x02
-#define INA219_POWER_REG_ADDR 0x03
-#define INA219_CUR_REG_ADDR 0x04
-#define INA219_CAL_REG_ADDR 0x05
+#define INA219_ADDRESS (0x40)
+
+#define INA219_READ (0x01)
+
+#define INA219_REG_CONFIG (0x00)
+
+#define INA219_CONFIG_RESET (0x8000)
+
+#define INA219_CONFIG_BVOLTAGERANGE_MASK (0x2000)
+
+enum {
+  INA219_CONFIG_BVOLTAGERANGE_16V = (0x0000),
+  INA219_CONFIG_BVOLTAGERANGE_32V = (0x2000),
+};
+
+#define INA219_CONFIG_GAIN_MASK (0x1800)
+
+enum {
+  INA219_CONFIG_GAIN_1_40MV = (0x0000),
+  INA219_CONFIG_GAIN_2_80MV = (0x0800),
+  INA219_CONFIG_GAIN_4_160MV = (0x1000),
+  INA219_CONFIG_GAIN_8_320MV = (0x1800),
+};
+
+#define INA219_CONFIG_BADCRES_MASK (0x0780)
+
+enum {
+  INA219_CONFIG_BADCRES_9BIT = (0x0000),
+  INA219_CONFIG_BADCRES_10BIT = (0x0080),
+  INA219_CONFIG_BADCRES_11BIT = (0x0100),
+  INA219_CONFIG_BADCRES_12BIT = (0x0180),
+  INA219_CONFIG_BADCRES_12BIT_2S_1060US = (0x0480),
+  INA219_CONFIG_BADCRES_12BIT_4S_2130US = (0x0500),
+  INA219_CONFIG_BADCRES_12BIT_8S_4260US = (0x0580),
+  INA219_CONFIG_BADCRES_12BIT_16S_8510US = (0x0600),
+  INA219_CONFIG_BADCRES_12BIT_32S_17MS = (0x0680),
+  INA219_CONFIG_BADCRES_12BIT_64S_34MS = (0x0700),
+  INA219_CONFIG_BADCRES_12BIT_128S_69MS = (0x0780),
+
+};
+
+#define INA219_CONFIG_SADCRES_MASK (0x0078)
+
+    enum {
+      INA219_CONFIG_SADCRES_9BIT_1S_84US = (0x0000),
+      INA219_CONFIG_SADCRES_10BIT_1S_148US = (0x0008),
+      INA219_CONFIG_SADCRES_11BIT_1S_276US = (0x0010),
+      INA219_CONFIG_SADCRES_12BIT_1S_532US = (0x0018),
+      INA219_CONFIG_SADCRES_12BIT_2S_1060US = (0x0048),
+      INA219_CONFIG_SADCRES_12BIT_4S_2130US = (0x0050),
+      INA219_CONFIG_SADCRES_12BIT_8S_4260US = (0x0058),
+      INA219_CONFIG_SADCRES_12BIT_16S_8510US = (0x0060),
+      INA219_CONFIG_SADCRES_12BIT_32S_17MS = (0x0068),
+      INA219_CONFIG_SADCRES_12BIT_64S_34MS = (0x0070),
+      INA219_CONFIG_SADCRES_12BIT_128S_69MS = (0x0078),
+    };
+
+#define INA219_CONFIG_MODE_MASK (0x0007)
+
+enum {
+  INA219_CONFIG_MODE_POWERDOWN = 0x00,
+  INA219_CONFIG_MODE_SVOLT_TRIGGERED = 0x01,
+  INA219_CONFIG_MODE_BVOLT_TRIGGERED = 0x02,
+  INA219_CONFIG_MODE_SANDBVOLT_TRIGGERED = 0x03,
+  INA219_CONFIG_MODE_ADCOFF = 0x04,
+  INA219_CONFIG_MODE_SVOLT_CONTINUOUS = 0x05,
+  INA219_CONFIG_MODE_BVOLT_CONTINUOUS = 0x06,
+  INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS = 0x07,
+};
+
+#define INA219_REG_SHUNTVOLTAGE (0x01)
+
+#define INA219_REG_BUSVOLTAGE (0x02)
+
+#define INA219_REG_POWER (0x03)
+
+#define INA219_REG_CURRENT (0x04)
+
+#define INA219_REG_CALIBRATION (0x05)
 
 class INA219 {
 public:
-  INA219(const float r_shunt = 0.1f, const float i_max = 3.2f,
-         const uint8_t address = 0x40)
-      : _r_shunt(r_shunt), _i_max(i_max), _iic_address(address) {}
-
-  INA219(const uint8_t address)
-      : _r_shunt(0.1f), _i_max(3.2f), _iic_address(address) {}
-
-  bool begin(int __attribute__((unused)) sda = 0,
-             int __attribute__((unused)) scl = 0) {
-#if defined(ESP32) || defined(ESP8266)
-    if (sda || scl)
-      Wire.begin(sda, scl);
-    else
-      Wire.begin();
-#else
-    Wire.begin();
-#endif
-    if (!testConnection())
-      return false;
-    calibrate();
-    return true;
-  }
-
-  void sleep(bool state) {
-    uint16_t cfg_register = readRegister(INA219_CFG_REG_ADDR) & ~(0b111);
-    writeRegister(INA219_CFG_REG_ADDR, cfg_register | (state ? 0b000 : 0b111));
-  }
-
-  void adjCalibration(int16_t adj) {
-    setCalibration(getCalibration() + adj);
-    _cal_value = _cal_value + adj;
-  }
-
-  void setCalibration(uint16_t cal) {
-    writeRegister(INA219_CAL_REG_ADDR, cal);
-    _cal_value = cal;
-  }
-
-  uint16_t getCalibration(void) {
-    _cal_value = readRegister(INA219_CAL_REG_ADDR);
-    return _cal_value;
-  }
-
-  void setResolution(bool ch, uint8_t mode) {
-    uint16_t cfg_register = readRegister(INA219_CFG_REG_ADDR);
-    cfg_register &= ~((0b1111) << (ch ? 7 : 3));
-    cfg_register |= mode << (ch ? 7 : 3);
-    writeRegister(INA219_CFG_REG_ADDR, cfg_register);
-  }
-
-  float getShuntVoltage(void) {
-    setCalibration(_cal_value);
-
-    int16_t value = readRegister(INA219_SHUNT_REG_ADDR);
-    return value * 0.00001f;
-  }
-
-  float getVoltage(void) {
-    uint16_t value = readRegister(INA219_VBUS_REG_ADDR);
-    return (value >> 3) * 0.004f;
-  }
-
-  float getCurrent(void) {
-    setCalibration(_cal_value);
-
-    int16_t value = readRegister(INA219_CUR_REG_ADDR);
-    return value * _current_lsb;
-  }
-
-  float getPower(void) {
-    setCalibration(_cal_value);
-
-    uint16_t value = readRegister(INA219_POWER_REG_ADDR);
-    return value * _power_lsb;
-  }
+  Adafruit_INA219(uint8_t addr = INA219_ADDRESS);
+  ~Adafruit_INA219();
+  bool begin(TwoWire *theWire = &Wire);
+  void setCalibration_32V_2A();
+  void setCalibration_32V_1A();
+  void setCalibration_16V_400mA();
+  float getBusVoltage_V();
+  float getShuntVoltage_mV();
+  float getCurrent_mA();
+  float getPower_mW();
+  void powerSave(bool on);
+  bool success();
 
 private:
-  const uint8_t _iic_address = 0x00;
-  const float _r_shunt = 0.0;
-  const float _i_max = 0.0;
+  Adafruit_I2CDevice *i2c_dev = NULL;
 
-  float _current_lsb = 0.0;
-  float _power_lsb = 0.0;
-  uint16_t _cal_value = 0;
+  bool _success;
 
-  void writeRegister(uint8_t address, uint16_t data) {
-    Wire.beginTransmission(_iic_address);
-    Wire.write(address);
-    Wire.write(highByte(data));
-    Wire.write(lowByte(data));
-    Wire.endTransmission();
-  }
+  uint8_t ina219_i2caddr = -1;
+  uint32_t ina219_calValue;
 
-  uint16_t readRegister(uint8_t address) {
-    Wire.beginTransmission(_iic_address);
-    Wire.write(address);
-    Wire.endTransmission();
-    Wire.requestFrom(_iic_address, (uint8_t)2);
-    return Wire.read() << 8 | Wire.read();
-  }
+  uint32_t ina219_currentDivider_mA;
+  float ina219_powerMultiplier_mW;
 
-  bool testConnection(void) {
-    Wire.beginTransmission(_iic_address);
-    return (bool)!Wire.endTransmission();
-  }
-
-  void calibrate(void) {
-    writeRegister(INA219_CFG_REG_ADDR, 0x8000);
-
-    _current_lsb = _i_max / 32768.0f;
-    _power_lsb = _current_lsb * 20.0f;
-    _cal_value = trunc(0.04096f / (_current_lsb * _r_shunt));
-
-    setCalibration(_cal_value);
-
-    uint16_t cfg_register = readRegister(INA219_CFG_REG_ADDR) & ~(0b11 << 11);
-
-    uint16_t vshunt_max_mv = (_r_shunt * _i_max) * 1000;
-
-    if (vshunt_max_mv <= 40)
-      cfg_register |= 0b00 << 11;
-    else if (vshunt_max_mv <= 80)
-      cfg_register |= 0b01 << 11;
-    else if (vshunt_max_mv <= 160)
-      cfg_register |= 0b10 << 11;
-    else
-      cfg_register |= 0b11 << 11;
-    writeRegister(INA219_CFG_REG_ADDR, cfg_register);
-  }
+  void init();
+  int16_t getBusVoltage_raw();
+  int16_t getShuntVoltage_raw();
+  int16_t getCurrent_raw();
+  int16_t getPower_raw();
 };
+
 #endif

@@ -1,6 +1,6 @@
 #include "main.h"
 
-INA219 ina(0.1f, 0.5f, 0x40);
+INA219 ina;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 HC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
 EncButton enc(2, 3, 4);
@@ -13,12 +13,14 @@ void setup() {
   }
   Serial.println("Serial OK");
 
-  while (!ina.begin()) {
+  if (!ina.begin()) {
+    Serial.println("Failed to find INA219 chip");
+    while (1) {
+      delay(10);
+    }
   }
-  Serial.println("INA OK");
 
-  ina.setResolution(INA219_VSHUNT, INA219_RES_12BIT);
-  ina.setResolution(INA219_VBUS, INA219_RES_12BIT);
+  ina.setCalibration_16V_400mA();
 
   reg.clearAll();
   reg.writeAll(false);

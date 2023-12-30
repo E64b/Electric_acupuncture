@@ -1,10 +1,10 @@
 #include <Arduino.h>
-#include <stdio.h>
-#include <Wire.h>
 #include <inttypes.h>
-#include <EEPROM.h>
+#include <stdio.h>
 #include <Print.h>
 #include <SPI.h>
+#include <Wire.h>
+#include <EEPROM.h>
 
 #include "./lib/HC595.h"
 #include "./lib/INA219.h"
@@ -23,7 +23,7 @@
 /*SETUP*/
 
 #define TIME_TO_STEP 60 // Step time for 3-22 program in sec
-#define BACKLIGHT true //lcd backlight true or false
+#define BACKLIGHT true // lcd backlight true or false
 
 /*END SETUP*/
 
