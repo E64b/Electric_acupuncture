@@ -1,11 +1,15 @@
 #include "main.h"
 
 void sensor() {
-  data.voltage = ina.getShuntVoltage_mV();
-  data.current = ina.getPower_mW();
-  if (data.oldCurrent != data.current || data.oldVoltage != data.voltage) {
+
+  float voltage = ina.getShuntVoltage_mV();
+  float amperage = ina.getCurrent_mA();
+
+  if (data.oldAmperage != amperage || data.oldVoltage != data.voltage) {
     data.displayRedraw = true;
-    data.oldCurrent = data.current;
-    data.oldVoltage = data.voltage;
+    data.oldAmperage = amperage;
+    data.oldVoltage = voltage;
+    data.voltage = voltage;
+    data.amperage_uA = data.amperage * 1000;
   }
 }

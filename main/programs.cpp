@@ -23,7 +23,7 @@
 #include "./prog/21.h"
 #include "./prog/22.h"
 
-const uint8_t *GetProg(uint8_t prog) {
+const uint16_t *GetProg(uint8_t prog) {
   switch (prog) {
   case 3:
     return _3;

@@ -1,17 +1,12 @@
 #include "main.h"
 
-#define START_SETTING 0
-#define SETTING 1
-#define WORK 2
-#define ERROR 10
-
 void lcdDisplay() {
   if (data.displayRedraw) {
     data.displayRedraw = false;
     lcd.clear();
 
-    switch (data.display) {
-    case START_SETTING:
+    switch (data.currentState) {
+    case SETTING_BEFORE_START:
       startMenu();
       lcd.setCursor(0, 0);
       lcd.print("Prog");
@@ -19,12 +14,12 @@ void lcdDisplay() {
       lcd.print(data.program);
       lcd.print("of 22");
       lcd.setCursor(0, 1);
-      lcd.print("Max I=");
-      lcd.print(' ');
-      lcd.print(data.maxCurrent);
+      lcd.print("Max I="); 
+      lcd.print(' '); 
+      lcd.print(data.maxAmperage);
       break;
 
-    case SETTING:
+    case SETTING_PROGRAM:
       setting();
       break;
 
