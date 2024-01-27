@@ -52,5 +52,6 @@ void loop() {
   lcdDisplay();
   sensor();
   work();
-  send_val();
+  protection();
+  sendVal();
 }

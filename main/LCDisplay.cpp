@@ -7,31 +7,45 @@ void lcdDisplay() {
 
     switch (data.currentState) {
     case SETTING_BEFORE_START:
-      startMenu();
       lcd.setCursor(0, 0);
       lcd.print("Prog");
       lcd.print(' ');
       lcd.print(data.program);
       lcd.print("of 22");
       lcd.setCursor(0, 1);
-      lcd.print("Max I="); 
-      lcd.print(' '); 
-      lcd.print(data.maxAmperage);
-      break;
+      lcd.print("Step");
+      lcd.print(' ');
+      lcd.print(DataMem.setTimeToStep);
+      lcd.print("sec");
+       break;
 
     case SETTING_PROGRAM:
-      setting();
+      lcd.setCursor(0, 0);
+      lcd.print("Prog");
+      lcd.print(' ');
+      lcd.print(data.program);
+      lcd.print(' ');
+      lcd.print("step");
+      lcd.print(' ');
+      lcd.print(data.i);
+      lcd.setCursor(0, 1);
+      if (data.program == 1) {
+        lcd.print(DataMem._1[data.i]);
+      }
+      if (data.program == 2) {
+        lcd.print(DataMem._2[data.i]);
+      }
+      lcd.print("sec");
       break;
 
     case WORK:
-      work();
       lcd.setCursor(0, 0);
       lcd.print("Step");
       lcd.print(' ');
       lcd.print(data.step);
       lcd.print(' ');
-      lcd.print("I=");
-      lcd.print(data.current);
+      lcd.print(data.amperage_uA);
+      lcd.print("uA");
       lcd.setCursor(0, 1);
       lcd.print("Time");
       lcd.print(' ');

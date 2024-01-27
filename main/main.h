@@ -42,6 +42,7 @@ struct DataMemory {
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
   /*First init, DON`T TOUCH*/
+  uint8_t setTimeToStep;
 };
 
 #pragma pack(push, 1)
@@ -49,19 +50,20 @@ struct DataMemory {
 typedef struct {
   bool out[ALL_DATA]{};
   uint16_t time[ALL_DATA]{};
-
+  uint16_t _1[64] {}; //buffer
+  uint16_t _2[32] {}; //buffer
   uint32_t timer = 0;
-  uint8_t setTimeToStep;
   uint16_t i = 0;
   uint8_t step;
   uint8_t currentState = 1;
-  uint32_t currentMillis;
+  uint32_t currentMillis = 0;
   uint32_t timeStep;
+  uint16_t oldExit;
 
   float voltage;
   float oldVoltage;
   float oldAmperage;
-  float maxAmperage = MAX_CURRENT;
+  float maxAmperage = MAX_AMPERAGE;
   float amperage_uA;
 
   bool displayRedraw = true;
@@ -84,14 +86,15 @@ void lcdDisplay();
 void sensor();
 void work();
 void menu();
-void send_val();
+void sendVal();
 void protection();
 
 /*================ defines ==============*/
 
 #define SETTING_BEFORE_START 1
 #define SETTING_PROGRAM 2
-#define WORK 3
-#define ERROR 10
+#define SETTING_IN_WORK 3
+#define WORK 4
+#define ERROR 255
 
 #pragma pack(pop)

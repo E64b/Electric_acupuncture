@@ -1,6 +1,6 @@
 #include "main.h"
 
-void send_val() {
+void sendVal() {
   if (data.send) {
     reg.update();
     data.send = false;
