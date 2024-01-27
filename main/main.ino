@@ -1,6 +1,6 @@
 #include "main.h"
 
-INA219 ina;
+Adafruit_INA219 ina;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 HC595<SHIFTS, HC_PINS> reg(STCP, DS, SHCP);
 EncButton enc(2, 3, 4);

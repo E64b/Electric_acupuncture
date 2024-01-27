@@ -75,12 +75,12 @@ typedef struct {
 } Data;
  
 extern EncButton enc;
-extern INA219 ina;
+extern Adafruit_INA219 ina;
 extern LiquidCrystal_I2C lcd;
 extern HC595<SHIFTS, HC_PINS> reg;
 extern Data data;
 extern DataMemory DataMem;
-extern const uint8_t *GetProg(uint8_t prog);
+extern const uint16_t *GetProg(uint8_t prog);
 
 void lcdDisplay();
 void sensor();

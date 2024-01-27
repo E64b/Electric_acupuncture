@@ -6,7 +6,7 @@
 #include <Adafruit_I2CDevice.h>
 #include <Wire.h>
 
-#define INA219_CALC_ADDRESS(INA_ADDR0, INA_ADDR1)                              \
+#define INA219_CALC_ADDRESS(INA_ADDR0, INA_ADDR1)   \
   (0x40 | (INA_ADDR0 != 0 ? 0x01 : 0x00) | (INA_ADDR1 != 0 ? 0x04 : 0x00))
 
 #define INA219_ADDRESS (0x40)
@@ -89,7 +89,7 @@ enum {
 
 #define INA219_REG_CALIBRATION (0x05)
 
-class INA219 {
+class Adafruit_INA219 {
 public:
   Adafruit_INA219(uint8_t addr = INA219_ADDRESS);
   ~Adafruit_INA219();

@@ -19,14 +19,14 @@ void menu() {
     }
 
     if (enc.leftH()) {
-      if (data.setTimeToStep >= 1 && data.program >= 3) {
+      if (DataMem.setTimeToStep >= 1 && data.program >= 3) {
         DataMem.setTimeToStep--;
         data.displayRedraw = true;
       }
     }
 
     if (enc.rightH()) {
-      if (data.setTimeToStep < 500 data.program >= 3) {
+      if (DataMem.setTimeToStep < 500 && data.program >= 3) {
         DataMem.setTimeToStep++;
         data.displayRedraw = true;
       }
@@ -55,27 +55,23 @@ void menu() {
 
   case SETTING_PROGRAM:
     if (enc.left()) {
-      if (data.setTime >= 1) {
-        if (data.program == 1) {
-          DataMem._1[data.i]--;
-        }
-        if (data.program == 2) {
-          DataMem._2[data.i]--;
-        }
-        data.displayRedraw = true;
+      if (data.program == 1 && DataMem._1[data.i] >= 1) {
+        DataMem._1[data.i]--;
       }
+      if (data.program == 2 && DataMem._2[data.i] >= 1) {
+        DataMem._2[data.i]--;
+      }
+      data.displayRedraw = true;
     }
 
     if (enc.right()) {
-      if (data.setTime <= 1000) {
-        if (data.program == 1) {
-          DataMem._1[data.i]++;
-        }
-        if (data.program == 2) {
-          DataMem._2[data.i]++;
-        }
-        data.displayRedraw = true;
+      if (data.program == 1 && DataMem._2[data.i] <= 1000) {
+        DataMem._1[data.i]++;
       }
+      if (data.program == 2 && DataMem._2[data.i] <= 1000) {
+        DataMem._2[data.i]++;
+      }
+      data.displayRedraw = true;
     }
 
     if (enc.leftH()) {

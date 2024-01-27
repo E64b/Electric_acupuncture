@@ -17,12 +17,14 @@ void work() {
         reg.set(data.step);
         data.step++;
         data.send = true;
+        data.displayRedraw = true;
       } else if (data.step == ALL_DATA) {
         data.work = false;
-        data.currentState = 1;
         data.step = 0;
         reg.clearAll();
         data.send = true;
+        data.currentState = SETTING_BEFORE_START;
+        data.displayRedraw = true;
       }
 
       if (data.program == 2 && data.step < (ALL_DATA / 2)) {
@@ -35,18 +37,20 @@ void work() {
         }
         data.step++;
         data.send = true;
+        data.displayRedraw = true;
       } else if (data.step == ALL_DATA / 2) {
         data.work = false;
         reg.clearAll();
-        data.currentState = 1;
         data.step = 0;
         data.send = true;
+        data.displayRedraw = true;
+        data.currentState = SETTING_BEFORE_START;
       }
     }
 
-    if (data.program >= 3 && data.program <= 22 && data.step < ALL_DATA)) {
+    if (data.program >= 3 && data.program <= 22 && data.step < ALL_DATA) {
 
-        if (millis() - data.currentMillis >= data.timeStep) {
+        if (millis() - data.currentMillis >= DataMem.setTimeToStep) {
 
           data.currentMillis = millis();
 
@@ -58,12 +62,15 @@ void work() {
           reg.set(exit);
           data.step++;
           data.send = true;
+          data.displayRedraw = true;
         }
         if (data.step == ALL_DATA) {
           data.work = false;
           data.currentState = 1;
           data.step = 0;
           reg.clearAll();
+          data.displayRedraw = true;
+          data.currentState = SETTING_BEFORE_START;
         }
       }
   }

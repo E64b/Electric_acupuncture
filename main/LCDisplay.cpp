@@ -17,7 +17,7 @@ void lcdDisplay() {
       lcd.print(' ');
       lcd.print(DataMem.setTimeToStep);
       lcd.print("sec");
-       break;
+      break;
 
     case SETTING_PROGRAM:
       lcd.setCursor(0, 0);
@@ -49,7 +49,12 @@ void lcdDisplay() {
       lcd.setCursor(0, 1);
       lcd.print("Time");
       lcd.print(' ');
-      lcd.print(data.timeStep);
+      if (data.program <= 2) {
+        lcd.print(data.timeStep);
+      }
+      if (data.program >= 3) {
+        lcd.print(DataMem.setTimeToStep);
+      }
       lcd.print(' ');
       lcd.print("sec");
       break;

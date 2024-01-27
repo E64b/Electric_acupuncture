@@ -10,6 +10,6 @@ void sensor() {
     data.oldAmperage = amperage;
     data.oldVoltage = voltage;
     data.voltage = voltage;
-    data.amperage_uA = data.amperage * 1000;
+    data.amperage_uA = amperage * 1000;
   }
 }
