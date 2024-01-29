@@ -6,7 +6,6 @@ void sensor() {
   float amperage = ina.getCurrent_mA();
 
   if (data.oldAmperage != amperage || data.oldVoltage != data.voltage) {
-    data.displayRedraw = true;
     data.oldAmperage = amperage;
     data.oldVoltage = voltage;
     data.voltage = voltage;

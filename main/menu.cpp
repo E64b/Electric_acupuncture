@@ -35,7 +35,7 @@ void menu() {
     if (enc.click()) {
       data.work = true;
       data.displayRedraw = true;
-      data.currentState = 2;
+      data.currentState = WORK;
     }
 
     if (enc.hold()) {

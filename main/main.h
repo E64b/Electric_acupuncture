@@ -15,14 +15,13 @@
 #define DS 11   // pinDT 14
 #define SHCP 13 // pinCLK 11
 
-#define SHIFTS 10 // Number of chips
+#define SHIFTS 8 // Number of chips
 #define HC595_DELAY 0
 #define ONE_SHIFT_DATA 8
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
 
 /*SETUP*/
 
-#define TIME_TO_STEP 60 // Step time for 3-22 program in sec
 #define BACKLIGHT true // lcd backlight true or false
 #define MAX_AMPERAGE 500 // Max current uA
 
