@@ -1,8 +1,8 @@
 #include "main.h"
 
-uint16_t getExit(const uint16_t *pChar, uint16_t index) { return pChar[index]; }
+uint16_t getExit(uint8_t *pChar, uint16_t index) { return pChar[index]; }
 
-uint32_t getTime(uint16_t timeS) { return timeS * 1000; }
+uint16_t getTime(uint16_t timeS) { return timeS * 1000; }
 
 void work() {
   if (data.work && data.error == false) {

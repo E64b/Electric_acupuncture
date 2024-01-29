@@ -48,6 +48,7 @@ struct DataMemory {
 #pragma pack(push, 1)
 
 typedef struct {
+  bool out[ALL_DATA];
   uint32_t timer = 0;
   uint16_t i = 0;
   uint8_t step;
