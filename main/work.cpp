@@ -1,6 +1,6 @@
 #include "main.h"
 
-uint16_t getExit(uint8_t *pChar, uint16_t index) { return pChar[index]; }
+uint16_t getExit(const uint8_t *pChar, uint16_t index) { return pChar[index]; }
 
 uint16_t getTime(uint16_t timeS) { return timeS * 1000; }
 
@@ -54,7 +54,6 @@ void work() {
 
           data.currentMillis = millis();
 
-          const uint16_t *prog = *GetProg(data.program);
           reg.clearAll();
           reg.clear(data.oldExit);
           uint16_t exit = getExit(data.program, data.step);

@@ -41,7 +41,7 @@ struct DataMemory {
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                      60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
   /*First init, DON`T TOUCH*/
-  uint8_t setTimeToStep;
+  uint8_t setTimeToStep = 60;
 };
 
 #pragma pack(push, 1)

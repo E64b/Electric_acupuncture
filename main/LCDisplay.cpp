@@ -2,6 +2,7 @@
 
 void lcdDisplay() {
   if (data.displayRedraw) {
+
     data.displayRedraw = false;
     lcd.clear();
 
