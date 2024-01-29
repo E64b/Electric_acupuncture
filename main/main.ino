@@ -9,6 +9,7 @@ DataMemory DataMem;
 
 void setup() {
   Serial.begin(115200);
+
   while (!Serial) {
   }
   Serial.println("Serial OK");
@@ -26,9 +27,10 @@ void setup() {
   reg.writeAll(false);
 
   for (uint16_t i = 0; i < ALL_DATA; i++) {
-    data.out[i] = false;
     reg.clear(i);
+    reg.update();
   }
+
   reg.update();
 
   if (EEPROM.get(0, DataMem.testMem) != false) {
