@@ -52,6 +52,7 @@ void setup() {
 void loop() {
 
   enc.tick();
+  menu();
   lcdDisplay();
   sensor();
   work();
