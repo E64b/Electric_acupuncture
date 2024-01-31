@@ -5,7 +5,7 @@ void menu() {
 
   case SETTING_BEFORE_START:
     if (enc.left()) {
-      if (data.program >= 1) {
+      if (data.program > 1) {
         data.program--;
         data.displayRedraw = true;
       }

@@ -59,7 +59,7 @@ typedef struct {
   float oldVoltage;
   float oldAmperage;
   float maxAmperage = MAX_AMPERAGE;
-  float amperage_uA;
+  uint16_t amperage_uA;
 
   bool displayRedraw = true;
   bool work = false;
