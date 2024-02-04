@@ -50,8 +50,11 @@ void lcdDisplay() {
       lcd.setCursor(0, 1);
       lcd.print("Time");
       lcd.print(' ');
-      if (data.program <= 2) {
-        lcd.print(data.timeStep);
+      if (data.program == 1) {
+        lcd.print(DataMem._1[data.step]);
+      }
+      if (data.program == 2) {
+        lcd.print(DataMem._2[data.step]);
       }
       if (data.program >= 3) {
         lcd.print(DataMem.setTimeToStep);

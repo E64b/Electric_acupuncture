@@ -65,10 +65,10 @@ void menu() {
     }
 
     if (enc.right()) {
-      if (data.program == 1 && DataMem._2[data.i] <= 1000) {
+      if (data.program == 1 && DataMem._2[data.i] < 60) {
         DataMem._1[data.i]++;
       }
-      if (data.program == 2 && DataMem._2[data.i] <= 1000) {
+      if (data.program == 2 && DataMem._2[data.i] < 60) {
         DataMem._2[data.i]++;
       }
       data.displayRedraw = true;
