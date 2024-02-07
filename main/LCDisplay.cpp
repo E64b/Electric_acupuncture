@@ -36,6 +36,10 @@ void lcdDisplay() {
       if (data.program == 2) {
         lcd.print(DataMem._2[data.i]);
       }
+      if (data.program > 2 && data.program <= 22) {
+        lcd.print(DataMem.setTimeToStep);
+      }
+      lcd.print(' ');
       lcd.print("sec");
       break;
 
@@ -56,7 +60,7 @@ void lcdDisplay() {
       if (data.program == 2) {
         lcd.print(DataMem._2[data.step]);
       }
-      if (data.program >= 3) {
+      if (data.program > 2 && data.program <= 22) {
         lcd.print(DataMem.setTimeToStep);
       }
       lcd.print(' ');

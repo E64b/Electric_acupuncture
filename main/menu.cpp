@@ -2,7 +2,6 @@
 
 void menu() {
   switch (data.currentState) {
-
   case SETTING_BEFORE_START:
     if (enc.left()) {
       if (data.program > 1) {

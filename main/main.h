@@ -24,6 +24,7 @@
 
 #define BACKLIGHT true // lcd backlight true or false
 #define MAX_AMPERAGE 500 // Max current uA
+#define COEFFICIENT 1000 //current COEFFICIENT defaut 1000
 
 /*END SETUP*/
 
