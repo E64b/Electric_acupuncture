@@ -20,6 +20,14 @@
 #define ONE_SHIFT_DATA 8
 #define ALL_DATA (SHIFTS * ONE_SHIFT_DATA)
 
+/*================ defines ==============*/
+
+#define SETTING_BEFORE_START 1
+#define SETTING_PROGRAM 2
+#define SETTING_IN_WORK 3
+#define WORK 4
+#define ERROR 255
+
 /*SETUP*/
 
 #define BACKLIGHT true   // lcd backlight true or false
@@ -88,13 +96,5 @@ void work();
 void menu();
 void sendVal();
 void protection();
-
-/*================ defines ==============*/
-
-#define SETTING_BEFORE_START 1
-#define SETTING_PROGRAM 2
-#define SETTING_IN_WORK 3
-#define WORK 4
-#define ERROR 255
 
 #pragma pack(pop)

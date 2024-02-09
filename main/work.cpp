@@ -50,7 +50,7 @@ void work() {
 
     if (data.program >= 3 && data.program <= 22 && data.step < ALL_DATA) {
 
-      if (millis() - data.currentMillis >= getTime(DataMem.setTimeToStep) {
+      if (millis() - data.currentMillis >= getTime(DataMem.setTimeToStep)) {
         data.currentMillis = millis();
 
         reg.clearAll();
