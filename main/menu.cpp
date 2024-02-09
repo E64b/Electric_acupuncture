@@ -26,7 +26,7 @@ void menu() {
     }
 
     if (enc.rightH()) {
-      if (DataMem.setTimeToStep < 500 && data.program >= 3) {
+      if (DataMem.setTimeToStep < 255 && data.program >= 3) {
         DataMem.setTimeToStep++;
         data.displayRedraw = true;
         data.settingsChanged = true;
@@ -78,10 +78,10 @@ void menu() {
     }
 
     if (enc.right()) {
-      if (data.program == 1 && DataMem._2[data.i] < 60) {
+      if (data.program == 1 && DataMem._2[data.i] < 255) {
         DataMem._1[data.i]++;
       }
-      if (data.program == 2 && DataMem._2[data.i] < 60) {
+      if (data.program == 2 && DataMem._2[data.i] < 255) {
         DataMem._2[data.i]++;
       }
       data.displayRedraw = true;

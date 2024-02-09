@@ -24,7 +24,7 @@
 
 #define BACKLIGHT true   // lcd backlight true or false
 #define MAX_AMPERAGE 500 // Max current uA
-#define COEFFICIENT 1000 //current COEFFICIENT defaut 1000
+#define COEFFICIENT 1000 // current COEFFICIENT default 1000
 
 /*END SETUP*/
 
@@ -54,7 +54,7 @@ typedef struct {
   uint32_t timer = 0;
   uint16_t i = 0;
   uint8_t step;
-  uint8_t currentState = 1;
+  uint8_t currentState = SETTING_BEFORE_START;
   uint32_t currentMillis = 0;
   uint32_t timeStep;
   uint16_t oldExit;
