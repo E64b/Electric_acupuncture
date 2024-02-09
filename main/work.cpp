@@ -51,7 +51,6 @@ void work() {
     if (data.program >= 3 && data.program <= 22 && data.step < ALL_DATA) {
 
       if (millis() - data.currentMillis >= getTime(DataMem.setTimeToStep) {
-
         data.currentMillis = millis();
 
         reg.clearAll();
@@ -65,7 +64,6 @@ void work() {
       }
       if (data.step == ALL_DATA) {
         data.work = false;
-        data.currentState = 1;
         data.step = 0;
         reg.clearAll();
         data.displayRedraw = true;
