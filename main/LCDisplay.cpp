@@ -12,6 +12,7 @@ void lcdDisplay() {
       lcd.print("Prog");
       lcd.print(' ');
       lcd.print(data.program);
+      lcd.print(' ');
       lcd.print("of 22");
       lcd.setCursor(0, 1);
       lcd.print("Step");

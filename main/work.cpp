@@ -29,6 +29,7 @@ void work() {
 
       if (data.program == 2 && data.step < (ALL_DATA / 2)) {
         data.timeStep = getTime(DataMem._2[data.step]);
+        data.oldExit = data.step;
         reg.clearAll();
         for (uint8_t i = 0; i <= 1; i++) {
           reg.set(data.step * 2);
@@ -39,8 +40,8 @@ void work() {
         data.displayRedraw = true;
       } else if (data.step == ALL_DATA / 2) {
         data.work = false;
-        data.step = 0;
         reg.clearAll();
+        data.step = 0;
         data.send = true;
         data.displayRedraw = true;
         data.currentState = SETTING_BEFORE_START;
@@ -48,8 +49,11 @@ void work() {
     }
 
     if (data.program >= 3 && data.program <= 22 && data.step < ALL_DATA) {
-      if (millis() - data.currentMillis >= DataMem.setTimeToStep) {
+
+      if (millis() - data.currentMillis >= getTime(DataMem.setTimeToStep) {
+
         data.currentMillis = millis();
+
         reg.clearAll();
         reg.clear(data.oldExit);
         uint16_t exit = getExit(data.program, data.step);
@@ -61,9 +65,9 @@ void work() {
       }
       if (data.step == ALL_DATA) {
         data.work = false;
+        data.currentState = 1;
         data.step = 0;
         reg.clearAll();
-        data.send = true;
         data.displayRedraw = true;
         data.currentState = SETTING_BEFORE_START;
       }

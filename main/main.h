@@ -1,15 +1,15 @@
 #include <Arduino.h>
-#include <inttypes.h>
-#include <stdio.h>
+#include <EEPROM.h>
 #include <Print.h>
 #include <SPI.h>
 #include <Wire.h>
-#include <EEPROM.h>
+#include <inttypes.h>
+#include <stdio.h>
 
+#include "./lib/Enc.h"
 #include "./lib/HC595.h"
 #include "./lib/INA219.h"
 #include "./lib/LiquidCrystal_I2C.h"
-#include "./lib/Enc.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -22,7 +22,7 @@
 
 /*SETUP*/
 
-#define BACKLIGHT true // lcd backlight true or false
+#define BACKLIGHT true   // lcd backlight true or false
 #define MAX_AMPERAGE 500 // Max current uA
 #define COEFFICIENT 1000 //current COEFFICIENT defaut 1000
 
@@ -33,16 +33,19 @@ struct DataMemory {
   bool testMem = false;
   /*First init, DON`T TOUCH*/
   uint8_t _1[64] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
+                    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
   /*First init, DON`T TOUCH*/
   uint8_t _2[32] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
+                    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                    60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
   /*First init, DON`T TOUCH*/
   uint8_t setTimeToStep = 60;
+  /*First init, DON`T TOUCH*/
+  uint8_t stepTime[20] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                          60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
 };
 
 #pragma pack(push, 1)
@@ -66,10 +69,11 @@ typedef struct {
   bool work = false;
   bool send = false;
   bool error = false;
-
+  bool settingsChanged = false;
   uint8_t program = 1;
+
 } Data;
- 
+
 extern EncButton enc;
 extern Adafruit_INA219 ina;
 extern LiquidCrystal_I2C lcd;
