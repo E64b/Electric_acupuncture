@@ -33,7 +33,7 @@ void setup() {
 
   reg.update();
 
-  if (EEPROM.get(0, DataMem.testMem) != false) {
+  if (EEPROM.get(0, DataMem.testMem) == true) {
     EEPROM.put(0, DataMem);
     DataMem.testMem = false;
     lcd.clear();

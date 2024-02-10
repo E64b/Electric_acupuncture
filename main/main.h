@@ -38,7 +38,7 @@
 
 struct DataMemory {
   /*First init, DON`T TOUCH*/
-  bool testMem = false;
+  bool testMem = true;
   /*First init, DON`T TOUCH*/
   uint8_t _1[64] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
