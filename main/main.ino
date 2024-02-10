@@ -35,6 +35,13 @@ void setup() {
 
   if (EEPROM.get(0, DataMem.testMem) != false) {
     EEPROM.put(0, DataMem);
+    DataMem.testMem = false;
+    lcd.clear();
+    lcd.home();
+    lcd.print("First Init");
+    lcd.setCursor(0, 1);
+    lcd.print("Load Setting");
+    delay(1000);
   } else {
     EEPROM.get(0, DataMem);
   }
@@ -56,6 +63,6 @@ void loop() {
   lcdDisplay();
   sensor();
   work();
-  //protection();
+  // protection();
   sendVal();
 }
