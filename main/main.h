@@ -32,7 +32,7 @@
 
 #define BACKLIGHT true   // lcd backlight true or false
 #define MAX_AMPERAGE 500 // Max current uA
-#define COEFFICIENT 1000 // current COEFFICIENT default 1000
+#define COEFFICIENT 1    // current COEFFICIENT default 1000
 
 /*END SETUP*/
 
@@ -64,7 +64,7 @@ typedef struct {
   uint8_t step;
   uint8_t currentState = SETTING_BEFORE_START;
   uint32_t currentMillis = 0;
-  uint32_t timeStep;
+  uint32_t timeStep = 0;
   uint16_t oldExit;
 
   float voltage;
@@ -88,7 +88,7 @@ extern LiquidCrystal_I2C lcd;
 extern HC595<SHIFTS, HC_PINS> reg;
 extern Data data;
 extern DataMemory DataMem;
-extern const uint16_t *GetProg(uint8_t prog);
+extern const uint8_t *GetProg(uint8_t progCode);
 
 void lcdDisplay();
 void sensor();
