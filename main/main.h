@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Print.h>
@@ -10,6 +12,8 @@
 #include "./lib/HC595.h"
 #include "./lib/INA219.h"
 #include "./lib/LiquidCrystal_I2C.h"
+
+#include "./prog/progTime.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -49,37 +53,30 @@ struct DataMemory {
   uint8_t _2[32] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
-  /*First init, DON`T TOUCH*/
-  uint8_t setTimeToStep = 60;
-  /*First init, DON`T TOUCH*/
-  uint8_t stepTime[20] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                          60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
+  /* First init, DON`T TOUCH*/
 };
 
 #pragma pack(push, 1)
 
 typedef struct {
-  uint32_t timer = 0;
-  uint16_t i = 0;
   uint8_t step;
   uint8_t currentState = SETTING_BEFORE_START;
   uint32_t currentMillis = 0;
   uint32_t timeStep = 0;
   uint16_t oldExit;
+  uint8_t program = 1;
 
   float voltage;
   float oldVoltage;
   float oldAmperage;
   float maxAmperage = MAX_AMPERAGE;
-  uint16_t amperage_uA;
+  float amperage_uA;
 
   bool displayRedraw = true;
   bool work = false;
   bool send = false;
   bool error = false;
   bool settingsChanged = false;
-  uint8_t program = 1;
-
 } Data;
 
 extern EncButton enc;

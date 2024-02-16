@@ -63,6 +63,6 @@ void loop() {
   lcdDisplay();
   sensor();
   work();
-  // protection();
+  //protection();
   sendVal();
 }

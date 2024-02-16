@@ -2,10 +2,8 @@
 
 void lcdDisplay() {
   if (data.displayRedraw) {
-
     data.displayRedraw = false;
     lcd.clear();
-
     switch (data.currentState) {
     case SETTING_BEFORE_START:
       lcd.setCursor(0, 0);
@@ -15,10 +13,15 @@ void lcdDisplay() {
       lcd.print(' ');
       lcd.print("of 22");
       lcd.setCursor(0, 1);
+      if (data.program < 3) {
+        lcd.print("Hold for setup");
+      }
+      if (data.program > 2) {      
       lcd.print("Step");
       lcd.print(' ');
-      lcd.print(DataMem.setTimeToStep);
+      lcd.print(stepTime[data.program - 3]);
       lcd.print("sec");
+      }
       break;
 
     case SETTING_PROGRAM:
@@ -26,19 +29,18 @@ void lcdDisplay() {
       lcd.print("Prog");
       lcd.print(' ');
       lcd.print(data.program);
+      lcd.print(' ');      
+      lcd.print("Step");      
       lcd.print(' ');
-      lcd.print("step");
-      lcd.print(' ');
-      lcd.print(data.i);
+      lcd.print(data.step + 1); 
       lcd.setCursor(0, 1);
+      lcd.print("Time");
+      lcd.print(' ');
       if (data.program == 1) {
-        lcd.print(DataMem._1[data.i]);
+        lcd.print(DataMem._1[data.step]);
       }
       if (data.program == 2) {
-        lcd.print(DataMem._2[data.i]);
-      }
-      if (data.program > 2 && data.program <= 22) {
-        lcd.print(DataMem.setTimeToStep);
+        lcd.print(DataMem._2[data.step]);
       }
       lcd.print(' ');
       lcd.print("sec");
@@ -48,7 +50,7 @@ void lcdDisplay() {
       lcd.setCursor(0, 0);
       lcd.print("Step");
       lcd.print(' ');
-      lcd.print(data.step);
+      lcd.print(data.step + 1);
       lcd.print(' ');
       lcd.print(data.amperage_uA);
       lcd.print("uA");
@@ -62,7 +64,7 @@ void lcdDisplay() {
         lcd.print(DataMem._2[data.step]);
       }
       if (data.program > 2 && data.program <= 22) {
-        lcd.print(DataMem.setTimeToStep);
+        lcd.print(stepTime[data.program - 3]);
       }
       lcd.print(' ');
       lcd.print("sec");

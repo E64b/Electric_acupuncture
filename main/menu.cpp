@@ -11,26 +11,16 @@ void menu() {
     }
 
     if (enc.right()) {
-      if (data.program <= 21) {
+      if (data.program < 22) {
         data.program++;
         data.displayRedraw = true;
       }
     }
 
     if (enc.leftH()) {
-      if (DataMem.setTimeToStep >= 1 && data.program >= 3) {
-        DataMem.setTimeToStep--;
-        data.displayRedraw = true;
-        data.settingsChanged = true;
-      }
     }
 
     if (enc.rightH()) {
-      if (DataMem.setTimeToStep < 255 && data.program >= 3) {
-        DataMem.setTimeToStep++;
-        data.displayRedraw = true;
-        data.settingsChanged = true;
-      }
     }
 
     if (enc.click()) {
@@ -46,6 +36,7 @@ void menu() {
         data.settingsChanged = false;
       }
       data.work = true;
+      data.step = 0;
       data.displayRedraw = true;
       data.currentState = WORK;
     }
@@ -55,11 +46,8 @@ void menu() {
         data.currentState = SETTING_PROGRAM;
       } else {
         data.work = true;
+        data.step = 0;
         data.currentState = WORK;
-        if (EEPROM.get(0, DataMem.setTimeToStep) = !DataMem.setTimeToStep) {
-          EEPROM.put(0, DataMem.setTimeToStep);
-          delay(50);
-        }
       }
       data.displayRedraw = true;
     }
@@ -67,38 +55,40 @@ void menu() {
 
   case SETTING_PROGRAM:
     if (enc.left()) {
-      if (data.program == 1 && DataMem._1[data.i] >= 1) {
-        DataMem._1[data.i]--;
+      if (data.program == 1 && DataMem._1[data.step] >= 1) {
+        DataMem._1[data.step]--;
       }
-      if (data.program == 2 && DataMem._2[data.i] >= 1) {
-        DataMem._2[data.i]--;
+      if (data.program == 2 && DataMem._2[data.step] >= 1) {
+        DataMem._2[data.step]--;
       }
       data.displayRedraw = true;
       data.settingsChanged = true;
     }
 
     if (enc.right()) {
-      if (data.program == 1 && DataMem._2[data.i] < 255) {
-        DataMem._1[data.i]++;
+      if (data.program == 1 && DataMem._1[data.step] < 255) {
+        DataMem._1[data.step]++;
       }
-      if (data.program == 2 && DataMem._2[data.i] < 255) {
-        DataMem._2[data.i]++;
+      if (data.program == 2 && DataMem._2[data.step] < 255) {
+        DataMem._2[data.step]++;
       }
       data.displayRedraw = true;
       data.settingsChanged = true;
     }
 
     if (enc.leftH()) {
-      if (data.i >= 1) {
-        data.i--;
+      if (data.step >= 1) {
+        data.step--;
         data.displayRedraw = true;
       }
     }
 
     if (enc.rightH()) {
-      if (data.i < ALL_DATA) {
-        data.i++;
-        data.displayRedraw = true;
+      if (data.program == 1 && data.step < 63) {
+        data.step++;
+      }
+      if (data.program == 2 && data.step < 31) {
+        data.step++;
       }
     }
 
@@ -114,6 +104,7 @@ void menu() {
         lcd.clear();
         data.settingsChanged = false;
       }
+      data.step = 0;
       data.work = true;
       data.displayRedraw = true;
       data.currentState = WORK;
@@ -128,7 +119,8 @@ void menu() {
       lcd.print("Pls wait...");
       delay(5000);
       lcd.clear();
-      data.currentState = SETTING_PROGRAM;
+      data.step = 0;
+      data.currentState = SETTING_BEFORE_START;
       data.displayRedraw = true;
     }
     break;
@@ -146,12 +138,14 @@ void menu() {
         data.work = false;
       } else if (data.work == false) {
         data.work = true;
+        data.currentMillis = millis();
       }
     }
 
     if (enc.hold()) {
       data.work = false;
-      data.currentState = SETTING_IN_WORK;
+      data.step = 0;
+      data.currentState = SETTING_BEFORE_START;
     }
     break;
   }
