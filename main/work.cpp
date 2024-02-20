@@ -1,14 +1,19 @@
 #include "main.h"
 
-uint8_t getExit(const uint8_t *pChar, uint8_t index) { return pChar[index]; }
+#include "./prog/progTime.h"
+
+uint8_t getExit(const uint8_t *prog, uint8_t index) { return prog[index]; }
 
 uint32_t getTime(uint32_t timeS) { return timeS * 1000; }
 
 void work() {
   if (data.work && data.error == false) {
+
     if ((data.program == 1 || data.program == 2) &&
-        millis() - data.currentMillis >= getTime(data.timeStep)) {
+        millis() - data.currentMillis > data.timeStep) {
+
       data.currentMillis = millis();
+
       if (data.program == 1 && data.step < ALL_DATA) {
         data.timeStep = getTime(DataMem._1[data.step]);
         reg.clearAll();
@@ -16,13 +21,13 @@ void work() {
         data.step++;
         data.send = true;
         data.displayRedraw = true;
-      } else if (data.step == ALL_DATA) {
-        data.work = false;
-        data.step = 0;
+      } else if (data.step == ALL_DATA && data.program == 1) {
         reg.clearAll();
         data.send = true;
-        data.currentState = SETTING_BEFORE_START;
+        data.work = false;
+        data.step = 0;
         data.displayRedraw = true;
+        data.currentState = SETTING_BEFORE_START;
       }
 
       if (data.program == 2 && data.step < (ALL_DATA / 2)) {
@@ -36,33 +41,40 @@ void work() {
         data.send = true;
         data.displayRedraw = true;
       } else if (data.step == ALL_DATA / 2 && data.program == 2) {
-        data.work = false;
         reg.clearAll();
-        data.step = 0;
         data.send = true;
+        data.work = false;
+        data.step = 0;
         data.displayRedraw = true;
         data.currentState = SETTING_BEFORE_START;
       }
     }
 
-    if (data.program > 2 && data.step < ALL_DATA &&
-        millis() - data.currentMillis >= getTime(stepTime[data.program - 3])) {
-      data.currentMillis = millis();
-      const uint8_t *prog = GetProg(data.program);
-      reg.clearAll();
-      reg.clear(data.oldExit);
-      uint8_t exit = getExit(prog, data.step);
-      data.oldExit = exit;
-      reg.set(exit);
-      data.step++;
-      data.send = true;
-      data.displayRedraw = true;
-    } else if (data.step == ALL_DATA) {
-      data.work = false;
-      data.step = 0;
-      reg.clearAll();
-      data.displayRedraw = true;
-      data.currentState = SETTING_BEFORE_START;
+    if (data.program > 2 && data.step <= ALL_DATA) {
+
+      if (millis() - data.currentMillis > data.timeStep) {
+
+        data.timeStep = getTime(stepTime[data.program - 3]);
+
+        data.currentMillis = millis();
+        reg.clearAll();
+        reg.clear(data.oldExit);
+        const uint8_t *prog = GetProg(data.program);
+        uint8_t exit = getExit(prog, data.step);
+        data.oldExit = exit;
+        reg.set(exit);
+        data.step++;
+        data.send = true;
+        data.displayRedraw = true;
+      } else if (data.step == ALL_DATA) {
+        reg.clear(data.oldExit);
+        reg.clearAll();
+        data.send = true;
+        data.work = false;
+        data.step = 0;
+        data.displayRedraw = true;
+        data.currentState = SETTING_BEFORE_START;
+      }
     }
   }
 }

@@ -33,9 +33,9 @@ void setup() {
 
   reg.update();
 
-  if (EEPROM.get(0, DataMem.testMem) == true) {
+  if (EEPROM.get(0, DataMem.testMem) == false) {
     EEPROM.put(0, DataMem);
-    DataMem.testMem = false;
+    DataMem.testMem = true;
     lcd.clear();
     lcd.home();
     lcd.print("First Init");
@@ -57,12 +57,11 @@ void setup() {
 }
 
 void loop() {
-
   enc.tick();
   menu();
   lcdDisplay();
   sensor();
   work();
-  //protection();
+  // protection();
   sendVal();
 }

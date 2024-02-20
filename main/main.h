@@ -79,6 +79,8 @@ typedef struct {
   bool settingsChanged = false;
 } Data;
 
+#pragma pack(pop)
+
 extern EncButton enc;
 extern Adafruit_INA219 ina;
 extern LiquidCrystal_I2C lcd;
@@ -86,6 +88,7 @@ extern HC595<SHIFTS, HC_PINS> reg;
 extern Data data;
 extern DataMemory DataMem;
 extern const uint8_t *GetProg(uint8_t progCode);
+extern const uint8_t stepTime[20];
 
 void lcdDisplay();
 void sensor();
@@ -93,5 +96,3 @@ void work();
 void menu();
 void sendVal();
 void protection();
-
-#pragma pack(pop)

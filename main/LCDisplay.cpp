@@ -15,12 +15,12 @@ void lcdDisplay() {
       lcd.setCursor(0, 1);
       if (data.program < 3) {
         lcd.print("Hold for setup");
-      }
-      if (data.program > 2) {      
-      lcd.print("Step");
-      lcd.print(' ');
-      lcd.print(stepTime[data.program - 3]);
-      lcd.print("sec");
+      } else if (data.program > 2) {
+        lcd.print("Step");
+        lcd.print(' ');
+        lcd.print(stepTime[data.program - 3]);
+        lcd.print(' ');
+        lcd.print("sec");
       }
       break;
 
@@ -29,18 +29,18 @@ void lcdDisplay() {
       lcd.print("Prog");
       lcd.print(' ');
       lcd.print(data.program);
-      lcd.print(' ');      
-      lcd.print("Step");      
       lcd.print(' ');
-      lcd.print(data.step + 1); 
+      lcd.print("Step");
+      lcd.print(' ');
+      lcd.print(data.step + 1);
       lcd.setCursor(0, 1);
       lcd.print("Time");
       lcd.print(' ');
       if (data.program == 1) {
-        lcd.print(DataMem._1[data.step]);
+        lcd.print(DataMem._1[data.step - 1]);
       }
       if (data.program == 2) {
-        lcd.print(DataMem._2[data.step]);
+        lcd.print(DataMem._2[data.step - 1]);
       }
       lcd.print(' ');
       lcd.print("sec");
@@ -50,7 +50,11 @@ void lcdDisplay() {
       lcd.setCursor(0, 0);
       lcd.print("Step");
       lcd.print(' ');
-      lcd.print(data.step + 1);
+      if (data.program > 3) {
+        lcd.print(data.step + 1);
+      } else {
+        lcd.print(data.step);
+      }
       lcd.print(' ');
       lcd.print(data.amperage_uA);
       lcd.print("uA");
@@ -64,7 +68,7 @@ void lcdDisplay() {
         lcd.print(DataMem._2[data.step]);
       }
       if (data.program > 2 && data.program <= 22) {
-        lcd.print(stepTime[data.program - 3]);
+        lcd.print(data.timeStep / 1000);
       }
       lcd.print(' ');
       lcd.print("sec");
