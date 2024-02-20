@@ -2,7 +2,9 @@
 
 #include "./prog/progTime.h"
 
-uint8_t getExit(const uint8_t *prog, uint8_t index) { return prog[index]; }
+uint8_t getExit(const uint8_t *prog, uint8_t index) {
+  return pgm_read_byte(&prog[index]);
+}
 
 uint32_t getTime(uint32_t timeS) { return timeS * 1000; }
 
@@ -51,11 +53,8 @@ void work() {
     }
 
     if (data.program > 2 && data.step <= ALL_DATA) {
-
       if (millis() - data.currentMillis > data.timeStep) {
-
-        data.timeStep = getTime(stepTime[data.program - 3]);
-
+        data.timeStep = getTime(pgm_read_byte(&stepTime[data.program - 3]));
         data.currentMillis = millis();
         reg.clearAll();
         reg.clear(data.oldExit);
@@ -63,6 +62,8 @@ void work() {
         uint8_t exit = getExit(prog, data.step);
         data.oldExit = exit;
         reg.set(exit);
+        //Serial.println(exit);
+        //Serial.println(data.step + 1);
         data.step++;
         data.send = true;
         data.displayRedraw = true;

@@ -7,6 +7,7 @@
 #include <Wire.h>
 #include <inttypes.h>
 #include <stdio.h>
+//#include <pgmspace.h>
 
 #include "./lib/Enc.h"
 #include "./lib/HC595.h"

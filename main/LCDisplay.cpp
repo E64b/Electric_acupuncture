@@ -18,7 +18,7 @@ void lcdDisplay() {
       } else if (data.program > 2) {
         lcd.print("Step");
         lcd.print(' ');
-        lcd.print(stepTime[data.program - 3]);
+        lcd.print(pgm_read_byte(&stepTime[data.program - 3]));
         lcd.print(' ');
         lcd.print("sec");
       }

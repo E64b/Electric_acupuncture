@@ -13,7 +13,7 @@ void setup() {
   while (!Serial) {
   }
   Serial.println("Serial OK");
-
+  
   if (!ina.begin()) {
     Serial.println("Failed to find INA219 chip");
     while (1) {
@@ -22,7 +22,7 @@ void setup() {
   }
 
   ina.setCalibration_16V_400mA();
-
+  
   reg.clearAll();
   reg.writeAll(false);
 
