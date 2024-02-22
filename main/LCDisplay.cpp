@@ -37,10 +37,10 @@ void lcdDisplay() {
       lcd.print("Time");
       lcd.print(' ');
       if (data.program == 1) {
-        lcd.print(DataMem._1[data.step - 1]);
+        lcd.print(DataMem._1[data.step]);
       }
       if (data.program == 2) {
-        lcd.print(DataMem._2[data.step - 1]);
+        lcd.print(DataMem._2[data.step]);
       }
       lcd.print(' ');
       lcd.print("sec");

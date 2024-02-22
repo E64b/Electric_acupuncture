@@ -18,9 +18,13 @@ void menu() {
     }
 
     if (enc.leftH()) {
+      data.displayRedraw = true;
+      data.settingsChanged = true;
     }
 
     if (enc.rightH()) {
+      data.displayRedraw = true;
+      data.settingsChanged = true;
     }
 
     if (enc.click()) {
@@ -42,7 +46,7 @@ void menu() {
     }
 
     if (enc.hold()) {
-      if ((data.program == 1) or (data.program == 2)) {
+      if (data.program < 3) {
         data.currentState = SETTING_PROGRAM;
       } else {
         data.work = true;
@@ -86,10 +90,12 @@ void menu() {
     if (enc.rightH()) {
       if (data.program == 1 && data.step < 63) {
         data.step++;
+        data.displayRedraw = true;
       }
       if (data.program == 2 && data.step < 31) {
         data.step++;
-      }
+        data.displayRedraw = true;
+      }      
     }
 
     if (enc.click()) {
