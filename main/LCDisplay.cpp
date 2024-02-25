@@ -18,7 +18,7 @@ void lcdDisplay() {
       } else if (data.program > 2) {
         lcd.print("Step");
         lcd.print(' ');
-        lcd.print(pgm_read_byte(&stepTime[data.program - 3]));
+        lcd.print(DataMem.stepTime[data.program - 3]);
         lcd.print(' ');
         lcd.print("sec");
       }
@@ -37,10 +37,10 @@ void lcdDisplay() {
       lcd.print("Time");
       lcd.print(' ');
       if (data.program == 1) {
-        lcd.print(DataMem._1[data.step]);
+        lcd.print(DataMem._1[data.step + 1]);
       }
       if (data.program == 2) {
-        lcd.print(DataMem._2[data.step]);
+        lcd.print(DataMem._2[data.step + 1]);
       }
       lcd.print(' ');
       lcd.print("sec");
@@ -62,12 +62,12 @@ void lcdDisplay() {
       lcd.print("Time");
       lcd.print(' ');
       if (data.program == 1) {
-        lcd.print(DataMem._1[data.step]);
+        lcd.print(DataMem._1[data.step-1]);
       }
       if (data.program == 2) {
-        lcd.print(DataMem._2[data.step]);
+        lcd.print(DataMem._2[data.step-1]);
       }
-      if (data.program > 2 && data.program <= 22) {
+      if (data.program > 2) {
         lcd.print(data.timeStep / 1000);
       }
       lcd.print(' ');

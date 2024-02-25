@@ -18,27 +18,22 @@ void menu() {
     }
 
     if (enc.leftH()) {
-      data.displayRedraw = true;
-      data.settingsChanged = true;
+      if (data.program > 2 && DataMem.stepTime[data.program - 3] > 1) {
+        DataMem.stepTime[data.program - 3]--;
+        data.displayRedraw = true;
+        data.settingsChanged = true;
+      }
     }
 
     if (enc.rightH()) {
-      data.displayRedraw = true;
-      data.settingsChanged = true;
+      if (data.program > 2 && DataMem.stepTime[data.program - 3] < 254) {
+        DataMem.stepTime[data.program - 3]++;
+        data.displayRedraw = true;
+        data.settingsChanged = true;
+      }
     }
 
-    if (enc.click()) {
-      if (data.settingsChanged) {
-        EEPROM.put(0, DataMem);
-        lcd.clear();
-        lcd.setCursor(0, 0);
-        lcd.print("SETTING SAVE");
-        lcd.setCursor(0, 1);
-        lcd.print("Pls wait...");
-        delay(5000);
-        lcd.clear();
-        data.settingsChanged = false;
-      }
+    if (enc.hasClicks(2)) {
       data.work = true;
       data.step = 0;
       data.displayRedraw = true;
@@ -48,10 +43,15 @@ void menu() {
     if (enc.hold()) {
       if (data.program < 3) {
         data.currentState = SETTING_PROGRAM;
-      } else {
-        data.work = true;
-        data.step = 0;
-        data.currentState = WORK;
+      } else if (data.settingsChanged && data.program > 2) {
+        EEPROM.put(0, DataMem);
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("SETTING SAVE");
+        lcd.setCursor(0, 1);
+        lcd.print("Pls wait...");
+        delay(5000);
+        lcd.clear();
       }
       data.displayRedraw = true;
     }
@@ -70,10 +70,10 @@ void menu() {
     }
 
     if (enc.right()) {
-      if (data.program == 1 && DataMem._1[data.step] < 255) {
+      if (data.program == 1 && DataMem._1[data.step] < 254) {
         DataMem._1[data.step]++;
       }
-      if (data.program == 2 && DataMem._2[data.step] < 255) {
+      if (data.program == 2 && DataMem._2[data.step] < 254) {
         DataMem._2[data.step]++;
       }
       data.displayRedraw = true;
@@ -95,10 +95,13 @@ void menu() {
       if (data.program == 2 && data.step < 31) {
         data.step++;
         data.displayRedraw = true;
-      }      
+      }
     }
 
-    if (enc.click()) {
+    /*if (enc.click()) {
+    }*/
+
+    if (enc.hold()) {
       if (data.settingsChanged) {
         EEPROM.put(0, DataMem);
         lcd.clear();
@@ -108,23 +111,7 @@ void menu() {
         lcd.print("Pls wait...");
         delay(5000);
         lcd.clear();
-        data.settingsChanged = false;
       }
-      data.step = 0;
-      data.work = true;
-      data.displayRedraw = true;
-      data.currentState = WORK;
-    }
-
-    if (enc.hold()) {
-      EEPROM.put(0, DataMem);
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("SETTING SAVE");
-      lcd.setCursor(0, 1);
-      lcd.print("Pls wait...");
-      delay(5000);
-      lcd.clear();
       data.step = 0;
       data.currentState = SETTING_BEFORE_START;
       data.displayRedraw = true;

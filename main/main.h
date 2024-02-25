@@ -14,7 +14,7 @@
 #include "./lib/INA219.h"
 #include "./lib/LiquidCrystal_I2C.h"
 
-#include "./prog/progTime.h"
+//#include "./prog/progTime.h"
 
 #define STCP 10 // pinCS 12
 #define DS 11   // pinDT 14
@@ -55,6 +55,8 @@ struct DataMemory {
                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
                     60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
   /* First init, DON`T TOUCH*/
+  uint8_t stepTime[20] = {60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
+                          60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
 };
 
 #pragma pack(push, 1)

@@ -1,6 +1,6 @@
 #include "main.h"
 
-#include "./prog/progTime.h"
+//#include "./prog/progTime.h"
 
 uint8_t getExit(const uint8_t *prog, uint8_t index) {
   return pgm_read_byte(&prog[index]);
@@ -54,7 +54,7 @@ void work() {
 
     if (data.program > 2 && data.step <= ALL_DATA) {
       if (millis() - data.currentMillis > data.timeStep) {
-        data.timeStep = getTime(pgm_read_byte(&stepTime[data.program - 3]));
+        data.timeStep = getTime(DataMem.stepTime[data.program - 3]);
         data.currentMillis = millis();
         reg.clearAll();
         reg.clear(data.oldExit);
